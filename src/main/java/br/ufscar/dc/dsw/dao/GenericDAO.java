@@ -3,7 +3,7 @@ package br.ufscar.dc.dsw.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import io.github.cdimascio.dotenv.Dotenv;
+import java.lang.*;
 
 abstract public class GenericDAO {
     
@@ -17,6 +17,7 @@ abstract public class GenericDAO {
         	/* Setup Banco de dados MySQL */
         	
         	Class.forName("com.mysql.cj.jdbc.Driver");
+            
         	
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -28,11 +29,6 @@ abstract public class GenericDAO {
     	
     	String url = "jdbc:mysql://localhost:3306/Livraria";
     	
-		Dotenv dotenv = Dotenv.configure()
-        .directory("./")
-        .ignoreIfMalformed()
-        .ignoreIfMissing()
-        .load();
-    	return DriverManager.getConnection(url, dotenv.get("SQL_USER"), dotenv.get("SQL_PASS"));
+    	return DriverManager.getConnection(url, System.getenv("SQL_USER"), System.getenv("SQL_PASS"));
     }
 }
