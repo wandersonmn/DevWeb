@@ -27,7 +27,7 @@ abstract public class GenericDAO {
     protected Connection getConnection() throws SQLException {	
     	/* Conexão banco de dados MySQL */
     	
-    	String url = "jdbc:mysql://localhost:3306/Livraria";
+    	String url = "jdbc:mysql://localhost:3306/Sis_Agenda";
     	
     	return DriverManager.getConnection(url, System.getenv("SQL_USER"), System.getenv("SQL_PASS"));
     }
