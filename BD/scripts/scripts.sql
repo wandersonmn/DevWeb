@@ -4,6 +4,11 @@
 -- ONLINE COM PROFISSIONAIS
 -- -----------------------------------------------------
 
+-- INICIALIZACAO
+DROP DATABASE `CONSULTAS_ONLINE`;
+CREATE DATABASE `CONSULTAS_ONLINE`;
+USE `CONSULTAS_ONLINE`;
+
 -- -----------------------------------------------------
 -- Table `USUARIO`
 -- -----------------------------------------------------
