@@ -3,7 +3,7 @@ package br.ufscar.dc.dsw.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.lang.*;
+// import java.lang.*;
 
 abstract public class GenericDAO {
     
