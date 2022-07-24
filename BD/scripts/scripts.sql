@@ -9,6 +9,15 @@ DROP DATABASE `CONSULTAS_ONLINE`;
 CREATE DATABASE `CONSULTAS_ONLINE`;
 USE `CONSULTAS_ONLINE`;
 
+-- POSSIVEIS TRATAMENTOS DE ERROS
+--
+--
+--
+--
+--
+--
+--
+
 -- -----------------------------------------------------
 -- Table `USUARIO`
 -- -----------------------------------------------------
@@ -29,7 +38,8 @@ CREATE TABLE IF NOT EXISTS `USUARIO` (
 CREATE TABLE IF NOT EXISTS `PROFISSIONAL` (
   `CPF_Profissional` VARCHAR(14) NOT NULL,
   `area_atuacao` VARCHAR(50) NOT NULL,
-  `especialidade` CHAR(1) NULL,
+  `especialidade` VARCHAR(50) NULL,
+  `qualificacoes` VARCHAR(512) CHARACTER SET 'ascii' COLLATE 'ascii_general_ci',
   PRIMARY KEY (`CPF_Profissional`),
   CONSTRAINT `fk_Profissional_Usuario`
     FOREIGN KEY (`CPF_Profissional`)
@@ -73,9 +83,9 @@ CREATE TABLE IF NOT EXISTS `AGENDAMENTO` (
     ON UPDATE NO ACTION
 );
 
--- -----------------------------------------------------
+-- ------------------------------------------------------
 -- exemplos de inserção e consulta
--- -----------------------------------------------------
+-- ------------------------------------------------------
 -- !!! OS VALORES DEVEM ESTAR ENTRE ASPAS SIMPLES (') !!!
 
 -- 2 usuarios
@@ -86,7 +96,7 @@ INSERT INTO USUARIO (`CPF`,`email`,`senha`,`nome`,`sexo`,`telefone`,`data_nascim
 VALUES ('98765432100','user2@gmail.com','4321','Gecomonildo Profissional da Silva','M','5511960606060','1999-12-21');
 
 -- 1 profissional
-INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`) VALUES ('98765432100','mecanico','fuselagem');
+INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('98765432100','mecanico','fuselagem','/src/qualy/0243.pdf');
 
 -- 1 cliente
 INSERT INTO CLIENTE (`CPF_Cliente`) VALUES ('12345678900');
@@ -100,3 +110,17 @@ SELECT * FROM AGENDAMENTO WHERE CPF_Cliente = '12345678900';
 
 -- listagem dos horarios de conulstas de um profissional
 SELECT * FROM AGENDAMENTO WHERE CPF_Profissional = '98765432100';
+
+-- DELETE FROM USUARIO
+-- ATENÇÃO, SIGA A SEQUENCIA INDICADA
+--
+SET FOREIGN_KEY_CHECKS=0; 
+DELETE FROM USUARIO WHERE CPF = '12345678900'; 
+SET FOREIGN_KEY_CHECKS=1;
+
+-- DELETE FROM AGENDAMENTO
+-- ATENÇÃO, SIGA A SEQUENCIA INDICADA
+--
+SET FOREIGN_KEY_CHECKS=0; 
+DELETE FROM AGENDAMENTO WHERE CPF_Cliente = '12345678900'; 
+SET FOREIGN_KEY_CHECKS=1;
