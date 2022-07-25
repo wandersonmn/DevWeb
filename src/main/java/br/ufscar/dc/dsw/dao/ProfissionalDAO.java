@@ -22,13 +22,15 @@ public class ProfissionalDAO extends GenericDAO {
 
     public void insert(PROFISSIONAL profissional) {
 
+        UsuarioDAO.insert(profissional);
+
         String sql = "INSERT INTO PROFISSIONAL (CPF_Profissional, area_atuacao, especialidade, qualificacoes) VALUES (?, ?, ?, ?, ?)";
 
         try {
-            Connection conn = this.getConnection();
+            Connection conn = getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setString(1, profissional.getUsuario().getCPF());
+            statement.setString(1, profissional.getCPF());
             statement.setString(2, profissional.getArea_atuacao());
             statement.setString(3, profissional.getEspecialidade());
             statement.setString(4, profissional.getQualificacoes());
@@ -49,7 +51,7 @@ public class ProfissionalDAO extends GenericDAO {
         String sql = "SELECT * from PROFISSIONAL p, USUARIO u where p.CPF_Profissional = u.CPF order by p.CPF_Profissional";
 
         try {
-            Connection conn = this.getConnection();
+            Connection conn = getConnection();
             Statement statement = conn.createStatement();
 
             ResultSet resultSet = statement.executeQuery(sql);
@@ -64,9 +66,7 @@ public class ProfissionalDAO extends GenericDAO {
                 String sexo = resultSet.getString("sexo");
                 String telefone = resultSet.getString("telefone");
                 String data_nascimento = resultSet.getString("data_nascimento");
-                USUARIO usuario = new USUARIO(cpf, email, senha, nome, sexo,
-                		telefone, data_nascimento);
-                PROFISSIONAL profissional = new PROFISSIONAL(area_atuacao,especialidade,qualificacoes,usuario);
+                PROFISSIONAL profissional = new PROFISSIONAL(cpf, nome, senha, email, sexo, telefone, data_nascimento, area_atuacao, especialidade, qualificacoes);
                 listaProfissionais.add(profissional);
             }
 
@@ -83,10 +83,10 @@ public class ProfissionalDAO extends GenericDAO {
         String sql = "DELETE FROM PROFISSIONAL where CPF_Profissional = ?";
 
         try {
-            Connection conn = this.getConnection();
+            Connection conn = getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setString(1, profissional.getCPF_Profissional());
+            statement.setString(1, profissional.getCPF());
             statement.executeUpdate();
 
             statement.close();
@@ -101,10 +101,10 @@ public class ProfissionalDAO extends GenericDAO {
         sql += "WHERE CPF_Profissional = ?";
 
         try {
-            Connection conn = this.getConnection();
+            Connection conn = getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setString(1, profissional.getCPF_Profissional());
+            statement.setString(1, profissional.getCPF());
             statement.setString(2, profissional.getArea_atuacao());
             statement.setString(3, profissional.getEspecialidade());
             statement.setString(4, profissional.getQualificacoes());
@@ -123,7 +123,7 @@ public class ProfissionalDAO extends GenericDAO {
         String sql = "SELECT * from PROFISSIONAL p where p.CPF_Profissional = ?";
 
         try {
-            Connection conn = this.getConnection();
+            Connection conn = getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement.setLong(1, id);
