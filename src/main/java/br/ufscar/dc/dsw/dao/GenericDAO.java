@@ -24,7 +24,7 @@ abstract public class GenericDAO {
         }
     }
 
-    protected static Connection getConnection() throws SQLException {	
+    protected Connection getConnection() throws SQLException {	
     	/* Conexão banco de dados MySQL */
     	
     	String url = "jdbc:mysql://localhost:3306/Sis_Agenda";

@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import br.ufscar.dc.dsw.dao.UsuarioDAO;
 import br.ufscar.dc.dsw.domain.PROFISSIONAL;
 import br.ufscar.dc.dsw.domain.USUARIO;
+import br.ufscar.dc.dsw.domain.ADMIN;
+import br.ufscar.dc.dsw.domain.CLIENTE;
 import br.ufscar.dc.dsw.util.Erro;
 
 @WebServlet(name = "Index", urlPatterns = { "/index.jsp", "/logout.jsp" })
@@ -39,7 +41,7 @@ public class IndexController extends HttpServlet {
 			}
 			if (!erros.isExisteErros()) {
 				UsuarioDAO dao = new UsuarioDAO();
-				USUARIO usuario = dao.getbyLogin(login);
+				USUARIO usuario = dao.get(login); // ! Login == CPF do usuário
 				if (usuario != null) {
 					if (usuario.getSenha().equals(senha)) {
 						request.getSession().setAttribute("usuarioLogado", usuario);

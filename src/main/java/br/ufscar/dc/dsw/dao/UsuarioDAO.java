@@ -12,13 +12,13 @@ import br.ufscar.dc.dsw.domain.USUARIO;
 
 public class UsuarioDAO extends GenericDAO {
 
-    public static void insert(USUARIO usuario) {
+    public void insert(USUARIO usuario) {
 
         String sql = "INSERT INTO USUARIO (CPF, email, senha, nome, sexo, "
-        		+ "telefone, data_nascimento) VALUES (?, ?, ?, ?, ?)";
+        		+ "telefone, data_nascimento) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try {
-            Connection conn = getConnection();
+            Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement.setString(1, usuario.getCPF());
@@ -37,14 +37,14 @@ public class UsuarioDAO extends GenericDAO {
         }
     }
 
-    public static List<USUARIO> getAll() {
+    public List<USUARIO> getAll() {
 
         List<USUARIO> listaUsuarios = new ArrayList<>();
 
-        String sql = "SELECT * from USUARIO u order by u.id";
+        String sql = "SELECT * from USUARIO u order by u.CPF";
 
         try {
-            Connection conn = getConnection();
+            Connection conn = this.getConnection();
             Statement statement = conn.createStatement();
 
             ResultSet resultSet = statement.executeQuery(sql);
@@ -70,11 +70,11 @@ public class UsuarioDAO extends GenericDAO {
         return listaUsuarios;
     }
 
-    public static void delete(USUARIO usuario) {
+    public void delete(USUARIO usuario) {
         String sql = "DELETE FROM USUARIO where CPF = ?";
 
         try {
-            Connection conn = getConnection();
+            Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement.setString(1, usuario.getCPF());
@@ -87,13 +87,13 @@ public class UsuarioDAO extends GenericDAO {
         }
     }
 
-    public static void update(USUARIO usuario) {
+    public void update(USUARIO usuario) {
         String sql = "UPDATE USUARIO SET CPF = ?, email = ?, senha = ?, "
         		+ "nome = ?, sexo = ?, telefone = ?, data_nascimento = ?";
         sql += "WHERE CPF = ?";
 
         try {
-            Connection conn = getConnection();
+            Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement.setString(1, usuario.getCPF());
@@ -112,13 +112,13 @@ public class UsuarioDAO extends GenericDAO {
         }
     }
 
-    public static USUARIO get(String CPF) {
+    public USUARIO get(String CPF) {
         USUARIO usuario = null;
 
-        String sql = "SELECT * from USUARIO u where u.id = ?";
+        String sql = "SELECT * from USUARIO u where u.CPF = ?";
 
         try {
-            Connection conn = getConnection();
+            Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement.setString(1, CPF);

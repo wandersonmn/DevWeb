@@ -22,12 +22,13 @@ public class ProfissionalDAO extends GenericDAO {
 
     public void insert(PROFISSIONAL profissional) {
 
-        UsuarioDAO.insert(profissional);
+        UsuarioDAO udao = new UsuarioDAO();
+        udao.insert(profissional);
 
         String sql = "INSERT INTO PROFISSIONAL (CPF_Profissional, area_atuacao, especialidade, qualificacoes) VALUES (?, ?, ?, ?, ?)";
 
         try {
-            Connection conn = getConnection();
+            Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement.setString(1, profissional.getCPF());
@@ -51,7 +52,7 @@ public class ProfissionalDAO extends GenericDAO {
         String sql = "SELECT * from PROFISSIONAL p, USUARIO u where p.CPF_Profissional = u.CPF order by p.CPF_Profissional";
 
         try {
-            Connection conn = getConnection();
+            Connection conn = this.getConnection();
             Statement statement = conn.createStatement();
 
             ResultSet resultSet = statement.executeQuery(sql);
@@ -83,7 +84,7 @@ public class ProfissionalDAO extends GenericDAO {
         String sql = "DELETE FROM PROFISSIONAL where CPF_Profissional = ?";
 
         try {
-            Connection conn = getConnection();
+            Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement.setString(1, profissional.getCPF());
@@ -101,7 +102,7 @@ public class ProfissionalDAO extends GenericDAO {
         sql += "WHERE CPF_Profissional = ?";
 
         try {
-            Connection conn = getConnection();
+            Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement.setString(1, profissional.getCPF());
@@ -123,7 +124,7 @@ public class ProfissionalDAO extends GenericDAO {
         String sql = "SELECT * from PROFISSIONAL p where p.CPF_Profissional = ?";
 
         try {
-            Connection conn = getConnection();
+            Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement.setLong(1, id);

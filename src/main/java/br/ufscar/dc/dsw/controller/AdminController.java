@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.ufscar.dc.dsw.domain.USUARIO;
 import br.ufscar.dc.dsw.domain.ADMIN;
-import br.ufscar.dc.dsw.domain.PROFISSIONAL;
+// TODO: Remover comentário eventualmente
+// import br.ufscar.dc.dsw.domain.PROFISSIONAL;
 import br.ufscar.dc.dsw.util.Erro;
 
 @WebServlet(urlPatterns = "/admin/*")

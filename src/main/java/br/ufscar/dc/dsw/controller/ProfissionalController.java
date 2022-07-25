@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.ufscar.dc.dsw.domain.PROFISSIONAL;
 import br.ufscar.dc.dsw.domain.USUARIO;
 import br.ufscar.dc.dsw.util.Erro;
 
@@ -30,7 +31,7 @@ public class ProfissionalController extends HttpServlet {
     	
     	if (usuario == null) {
     		response.sendRedirect(request.getContextPath());
-    	} else if (usuario.getPapel().equals("PRO")) {
+    	} else if (usuario instanceof PROFISSIONAL) {
     		RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/usuario/index.jsp");
             dispatcher.forward(request, response);
     	} else {
