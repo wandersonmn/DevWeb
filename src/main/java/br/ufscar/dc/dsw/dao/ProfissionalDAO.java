@@ -119,26 +119,27 @@ public class ProfissionalDAO extends GenericDAO {
     }
 
     public PROFISSIONAL get(String CPF_Profissional) {
-        PROFISSIONAL Profissional = null;
+        PROFISSIONAL profissional = null;
 
-        String sql = "SELECT * from PROFISSIONAL p where p.CPF_Profissional = ?";
+        String sql = "SELECT * from PROFISSIONAL p inner join USUARIO u on (p.CPF_Profissional = u.CPF) p where p.CPF_Profissional = ?";
 
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setLong(1, id);
+            statement.setString(1, CPF_Profissional);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                String titulo = resultSet.getString("titulo");
-                String autor = resultSet.getString("autor");
-                int ano = resultSet.getInt("ano");
-                float preco = resultSet.getFloat("preco");
+                
+                String area_atuacao = resultSet.getString("area_atuacao");
+                String especialidade = resultSet.getString("especialidade");
+                String qualificacoes = resultSet.getString("qualificacoes");
+                
 
-                Long editoraID = resultSet.getLong("editora_id");
-                Editora editora = new EditoraDAO().get(editoraID);
+                String cpf = resultSet.getString("cpf");
+                USUARIO usuario = new UsuarioDAO().get(cpf);
 
-                livro = new Livro(id, titulo, autor, ano, preco, editora);
+                profissional = new PROFISSIONAL(usuario, area_atuacao, especialidade, qualificacoes);
             }
 
             resultSet.close();
@@ -147,7 +148,7 @@ public class ProfissionalDAO extends GenericDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return livro;
+        return profissional;
     }
 }
 
