@@ -13,9 +13,9 @@ import br.ufscar.dc.dsw.domain.Livro;
 
 public class LivroDAO extends GenericDAO {
 
-    public void insert(Livro livro) {
+    public void insert(USUARIO usuario) {
 
-        String sql = "INSERT INTO Livro (titulo, autor, ano, preco, editora_id) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO USUARIO (CPF, email, senha, nome, sexo, telefone, data_nascimento) VALUES (?, ?, ?, ?, ?)";
 
         try {
             Connection conn = this.getConnection();
