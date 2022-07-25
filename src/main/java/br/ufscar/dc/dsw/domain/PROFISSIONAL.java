@@ -13,6 +13,14 @@ public class PROFISSIONAL extends USUARIO{
         this.qualificacoes = qualificacoes;   
     }
 	
+	public PROFISSIONAL(USUARIO u, String area_atuacao, String especialidade, String qualificacoes) {
+		super(u.getCPF(),u.getNome(), u.getSenha(), u.getEmail(), u.getSexo(),u.getTelefone(), u.getData_nascimento());
+		this.area_atuacao = area_atuacao;
+        this.especialidade = especialidade;
+        this.qualificacoes = qualificacoes; 
+		
+	}
+	
 	
 	public String getArea_atuacao() {
 		return area_atuacao;
