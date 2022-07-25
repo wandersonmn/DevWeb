@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.ufscar.dc.dsw.dao.UsuarioDAO;
+import br.ufscar.dc.dsw.domain.PROFISSIONAL;
 import br.ufscar.dc.dsw.domain.USUARIO;
 import br.ufscar.dc.dsw.util.Erro;
 
@@ -42,10 +43,15 @@ public class IndexController extends HttpServlet {
 				if (usuario != null) {
 					if (usuario.getSenha().equals(senha)) {
 						request.getSession().setAttribute("usuarioLogado", usuario);
-						if (usuario.getPapel().equals("ADMIN")) {
+						if (usuario instanceof ADMIN) {
 							response.sendRedirect("admin/");
+						} else if (usuario instanceof PROFISSIONAL){
+						// } else if (usuario.getPapel().equals("PRO")){
+							response.sendRedirect("profissional/");
+						} else if (usuario instanceof CLIENTE){
+							response.sendRedirect("cliente/");
 						} else {
-							response.sendRedirect("usuario/");
+							erros.add("Usuário não possui papel!");
 						}
 						return;
 					} else {

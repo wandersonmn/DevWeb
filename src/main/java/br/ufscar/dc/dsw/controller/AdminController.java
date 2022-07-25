@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.ufscar.dc.dsw.domain.USUARIO;
+import br.ufscar.dc.dsw.domain.ADMIN;
+import br.ufscar.dc.dsw.domain.PROFISSIONAL;
 import br.ufscar.dc.dsw.util.Erro;
 
 @WebServlet(urlPatterns = "/admin/*")
@@ -30,7 +32,7 @@ public class AdminController extends HttpServlet {
     	
     	if (usuario == null) {
     		response.sendRedirect(request.getContextPath());
-    	} else if (usuario.getPapel().equals("ADMIN")) {
+    	} else if (usuario instanceof ADMIN) {
     		RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/index.jsp");
             dispatcher.forward(request, response);
     	} else {
