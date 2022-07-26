@@ -5,7 +5,7 @@
 -- -----------------------------------------------------
 
 -- INICIALIZACAO
-DROP DATABASE `CONSULTAS_ONLINE`;
+DROP DATABASE CONSULTAS_ONLINE;
 CREATE DATABASE `CONSULTAS_ONLINE`;
 USE `CONSULTAS_ONLINE`;
 
@@ -88,15 +88,23 @@ CREATE TABLE IF NOT EXISTS `AGENDAMENTO` (
 -- ------------------------------------------------------
 -- !!! OS VALORES DEVEM ESTAR ENTRE ASPAS SIMPLES (') !!!
 
--- 2 usuarios
+-- 4 usuarios
 INSERT INTO USUARIO (`CPF`,`email`,`senha`,`nome`,`sexo`,`telefone`,`data_nascimento`) 
 VALUES ('12345678900','user1@gmail.com','1234','Glauber Cliente da Silva','M','5511970707070','2000-12-21');
 
 INSERT INTO USUARIO (`CPF`,`email`,`senha`,`nome`,`sexo`,`telefone`,`data_nascimento`) 
-VALUES ('98765432100','user2@gmail.com','4321','Gecomonildo Profissional da Silva','M','5511960606060','1999-12-21');
+VALUES ('98765432100','user2@gmail.com','pro','Gecomonildo Profissional da Silva','M','5511960606060','1999-12-21');
 
--- 1 profissional
+INSERT INTO USUARIO (`CPF`,`email`,`senha`,`nome`,`sexo`,`telefone`,`data_nascimento`) 
+VALUES ('42069621000','sandra@gmail.com','pro','Sandra Profissional da Silva','M','5511992837615','1997-11-12');
+
+INSERT INTO USUARIO (`CPF`,`email`,`senha`,`nome`,`sexo`,`telefone`,`data_nascimento`) 
+VALUES ('CPFEHSTRING','paulo@redes.com','pro','Paulo Profissional da Silva','M','5511987676545','2002-02-02');
+
+-- 3 profissionais
 INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('98765432100','mecanico','fuselagem','/src/qualy/0243.pdf');
+INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('42069621000','medico','computadores','todas');
+INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('CPFEHSTRING','professor','redes','a maioria');
 
 -- 1 cliente
 INSERT INTO CLIENTE (`CPF_Cliente`) VALUES ('12345678900');
@@ -104,6 +112,10 @@ INSERT INTO CLIENTE (`CPF_Cliente`) VALUES ('12345678900');
 -- 1 agendamento entre o cliente e o usuario criados anteriormente
 INSERT INTO AGENDAMENTO (`CPF_Cliente`,`CPF_Profissional`,`data`,`hora`) 
 VALUES ('12345678900','98765432100','2022-07-25','14:00:00.0000000');
+INSERT INTO AGENDAMENTO (`CPF_Cliente`,`CPF_Profissional`,`data`,`hora`) 
+VALUES ('12345678900','42069621000','2022-08-12','13:30:00.0000000');
+INSERT INTO AGENDAMENTO (`CPF_Cliente`,`CPF_Profissional`,`data`,`hora`) 
+VALUES ('12345678900','CPFEHSTRING','2022-10-03','13:31:00.0000000');
 
 -- listagem dos horarios de conulstas de um cliente
 SELECT * FROM AGENDAMENTO WHERE CPF_Cliente = '12345678900';
@@ -114,13 +126,13 @@ SELECT * FROM AGENDAMENTO WHERE CPF_Profissional = '98765432100';
 -- DELETE FROM USUARIO
 -- ATENÇÃO, SIGA A SEQUENCIA INDICADA
 --
-SET FOREIGN_KEY_CHECKS=0; 
-DELETE FROM USUARIO WHERE CPF = '12345678900'; 
-SET FOREIGN_KEY_CHECKS=1;
+-- SET FOREIGN_KEY_CHECKS=0; 
+-- DELETE FROM USUARIO WHERE CPF = '12345678900'; 
+-- SET FOREIGN_KEY_CHECKS=1;
 
 -- DELETE FROM AGENDAMENTO
 -- ATENÇÃO, SIGA A SEQUENCIA INDICADA
 --
-SET FOREIGN_KEY_CHECKS=0; 
-DELETE FROM AGENDAMENTO WHERE CPF_Cliente = '12345678900'; 
-SET FOREIGN_KEY_CHECKS=1;
+-- SET FOREIGN_KEY_CHECKS=0; 
+-- DELETE FROM AGENDAMENTO WHERE CPF_Cliente = '12345678900'; 
+-- SET FOREIGN_KEY_CHECKS=1;
