@@ -15,7 +15,7 @@
         <div align="center">
             <h1>Sistema de Agendamento</h1>
             <h3>
-                <a href="/<%=contextPath%>/conta">Minha Conta</a>
+                <a href="/<%=contextPath%>/login">Minha Conta</a>
             </h3>
         </div>
 
