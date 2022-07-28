@@ -30,10 +30,10 @@
                 </tr>
                 <c:forEach var="profissional" items="${requestScope.listaProfissionais}">
                     <tr>
-                        <td>${profissional.nome}</td>
-                        <td>${profissional.area_atuacao}</td>
-                        <td>${profissional.especialidade}</td>
-                        <td><a href="/<%= contextPath%>/profissional/agendar?id=${profissional.uuid}">Agendar</a></a></td>
+                        <td>${profissional.getNome()}</td>
+                        <td>${profissional.getArea_atuacao()}</td>
+                        <td>${profissional.getEspecialidade()}</td>
+                        <td><a href="/<%= contextPath%>/profissional/agendar?id=${profissional.getCPF()}">Agendar</a></a></td>
                     </tr>
                 </c:forEach>
             </table>

@@ -1,7 +1,12 @@
 package br.ufscar.dc.dsw.controller;
 
-import java.io.IOException;
+import br.ufscar.dc.dsw.dao.ProfissionalDAO;
+import br.ufscar.dc.dsw.domain.PROFISSIONAL;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,67 +14,125 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.ufscar.dc.dsw.dao.UsuarioDAO;
-import br.ufscar.dc.dsw.domain.PROFISSIONAL;
-import br.ufscar.dc.dsw.domain.USUARIO;
-import br.ufscar.dc.dsw.domain.ADMIN;
-import br.ufscar.dc.dsw.domain.CLIENTE;
-import br.ufscar.dc.dsw.util.Erro;
-
-@WebServlet(name = "Index", urlPatterns = {"/login.jsp", "/logout.jsp" }) //"/index.jsp"
+@WebServlet(urlPatterns = "/index.jsp")
 public class IndexController extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
-	
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doGet(request, response);
-	}
+    private static final long serialVersionUID = 1L;
+    
+    private ProfissionalDAO dao;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		Erro erros = new Erro();
-		if (request.getParameter("bOK") != null) {
-			String login = request.getParameter("login");
-			String senha = request.getParameter("senha");
-			if (login == null || login.isEmpty()) {
-				erros.add("Login não informado!");
-			}
-			if (senha == null || senha.isEmpty()) {
-				erros.add("Senha não informada!");
-			}
-			if (!erros.isExisteErros()) {
-				UsuarioDAO dao = new UsuarioDAO();
-				USUARIO usuario = dao.get(login); // ! Login == CPF do usuário
-				if (usuario != null) {
-					if (usuario.getSenha().equals(senha)) {
-						request.getSession().setAttribute("usuarioLogado", usuario);
-						if (usuario instanceof ADMIN) {
-							response.sendRedirect("admin/");
-						} else if (usuario instanceof PROFISSIONAL){
-						// } else if (usuario.getPapel().equals("PRO")){
-							response.sendRedirect("profissional/");
-						} else if (usuario instanceof CLIENTE){
-							response.sendRedirect("cliente/");
-						} else {
-							erros.add("Usuário não possui papel!");
-						}
-						return;
-					} else {
-						erros.add("Senha inválida!");
-					}
-				} else {
-					erros.add("Usuário não encontrado!");
-				}
-			}
-		}
-		request.getSession().invalidate();
+    @Override
+    public void init() {
+        dao = new ProfissionalDAO();
+    }
 
-		request.setAttribute("mensagens", erros);
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException {
+        doGet(request, response);
+    }
 
-		String URL = "/login.jsp";
-		RequestDispatcher rd = request.getRequestDispatcher(URL);
-		rd.forward(request, response);
-	}
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException {
+                
+        String action = request.getPathInfo();
+        if (action == null) {
+            action = "";
+        }
+
+        try {
+            switch (action) {
+				// ! Não sei se é o ideal colocar o agendamento e a conta aqui
+                case "/agendar":
+                    lista(request, response); // TODO: mudar
+                    break;
+                case "/conta":
+					lista(request, response); // TODO: mudar
+                    break;
+                default:
+                    lista(request, response);
+                    break;
+            }
+        } catch (RuntimeException | IOException | ServletException e) {
+            throw new ServletException(e);
+        }
+    }
+
+    private void lista(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        List<PROFISSIONAL> listaProfissionais = dao.getAll();
+        request.setAttribute("listaProfissionais", listaProfissionais);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/inicial.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    // private Map<Long, String> getEditoras() {
+    //     Map <Long,String> editoras = new HashMap<>();
+    //     for (Editora editora: new EditoraDAO().getAll()) {
+    //         editoras.put(editora.getId(), editora.getNome());
+    //     }
+    //     return editoras;
+    // }
+    
+    // private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
+    //         throws ServletException, IOException {
+    //     request.setAttribute("editoras", getEditoras());
+    //     RequestDispatcher dispatcher = request.getRequestDispatcher("/livro/formulario.jsp");
+    //     dispatcher.forward(request, response);
+    // }
+
+    // private void apresentaFormEdicao(HttpServletRequest request, HttpServletResponse response)
+    //         throws ServletException, IOException {
+    //     Long id = Long.parseLong(request.getParameter("id"));
+    //     Livro livro = dao.get(id);
+    //     request.setAttribute("livro", livro);
+    //     request.setAttribute("editoras", getEditoras());
+    //     RequestDispatcher dispatcher = request.getRequestDispatcher("/livro/formulario.jsp");
+    //     dispatcher.forward(request, response);
+    // }
+
+    // private void insere(HttpServletRequest request, HttpServletResponse response)
+    //         throws ServletException, IOException {
+    //     request.setCharacterEncoding("UTF-8");
+        
+    //     String titulo = request.getParameter("titulo");
+    //     String autor = request.getParameter("autor");
+    //     Integer ano = Integer.parseInt(request.getParameter("ano"));
+    //     Float preco = Float.parseFloat(request.getParameter("preco"));
+        
+    //     Long editoraID = Long.parseLong(request.getParameter("editora"));
+    //     Editora editora = new EditoraDAO().get(editoraID);
+        
+    //     Livro livro = new Livro(titulo, autor, ano, preco, editora);
+    //     dao.insert(livro);
+    //     response.sendRedirect("lista");
+    // }
+
+    // private void atualize(HttpServletRequest request, HttpServletResponse response)
+    //         throws ServletException, IOException {
+
+    //     request.setCharacterEncoding("UTF-8");
+    //     Long id = Long.parseLong(request.getParameter("id"));
+    //     String titulo = request.getParameter("titulo");
+    //     String autor = request.getParameter("autor");
+    //     Integer ano = Integer.parseInt(request.getParameter("ano"));
+    //     Float preco = Float.parseFloat(request.getParameter("preco"));
+        
+    //     Long editoraID = Long.parseLong(request.getParameter("editora"));
+    //     Editora editora = new EditoraDAO().get(editoraID);
+        
+    //     Livro livro = new Livro(id, titulo, autor, ano, preco, editora);
+    //     dao.update(livro);
+    //     response.sendRedirect("lista");
+    // }
+
+    // private void remove(HttpServletRequest request, HttpServletResponse response)
+    //         throws IOException {
+    //     Long id = Long.parseLong(request.getParameter("id"));
+
+    //     Livro livro = new Livro(id);
+    //     dao.delete(livro);
+    //     response.sendRedirect("lista");
+    // }
 }

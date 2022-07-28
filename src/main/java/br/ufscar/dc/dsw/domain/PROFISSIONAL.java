@@ -21,7 +21,6 @@ public class PROFISSIONAL extends USUARIO{
 		
 	}
 	
-	
 	public String getArea_atuacao() {
 		return area_atuacao;
 	}
