@@ -16,8 +16,13 @@ import br.ufscar.dc.dsw.domain.ADMIN;
 import br.ufscar.dc.dsw.domain.CLIENTE;
 import br.ufscar.dc.dsw.util.Erro;
 
+// TODO: Implementar abaixo:
 /*
  * Servlet de Login
+ * 
+ * Vai utilizar o atributo "usuarioLogado" e "direcao"
+ * Se já autenticado, redireciona para "direcao"
+ * Se não, apresenta tela de login, e redireciona para "direcao" ou página de erro
  */
 @WebServlet(name = "Index", urlPatterns = {"/login/*",})
 public class LoginController extends HttpServlet {
