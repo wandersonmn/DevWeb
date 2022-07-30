@@ -18,6 +18,7 @@ USE `CONSULTAS_ONLINE`;
 --
 --
 
+
 -- -----------------------------------------------------
 -- Table `USUARIO`
 -- -----------------------------------------------------
@@ -33,6 +34,19 @@ CREATE TABLE IF NOT EXISTS `USUARIO` (
 );
 
 -- -----------------------------------------------------
+-- Table `ADM`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ADMINSTRATOR` (
+  `CPF_Adm` VARCHAR(14) NOT NULL,
+  PRIMARY KEY (`CPF_Adm`),
+  CONSTRAINT `fk_Adm_Usuario`
+    FOREIGN KEY (`CPF_Adm`)
+    REFERENCES `USUARIO` (`CPF`)
+    ON DELETE CASCADE -- `CASCADE` TO DELETE HERE AS WELL
+    ON UPDATE CASCADE
+);
+
+-- -----------------------------------------------------
 -- Table `PROFISSIONAL`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `PROFISSIONAL` (
@@ -44,8 +58,8 @@ CREATE TABLE IF NOT EXISTS `PROFISSIONAL` (
   CONSTRAINT `fk_Profissional_Usuario`
     FOREIGN KEY (`CPF_Profissional`)
     REFERENCES `USUARIO` (`CPF`)
-    ON DELETE NO ACTION -- `CASCADE` TO DELETE HERE AS WELL
-    ON UPDATE NO ACTION
+    ON DELETE CASCADE -- `CASCADE` TO DELETE HERE AS WELL
+    ON UPDATE CASCADE
 );
 
 -- -----------------------------------------------------
@@ -57,8 +71,8 @@ CREATE TABLE IF NOT EXISTS `CLIENTE` (
   CONSTRAINT `fk_Cliente_Usuario`
     FOREIGN KEY (`CPF_Cliente`)
     REFERENCES `USUARIO` (`CPF`)
-    ON DELETE NO ACTION -- `CASCADE` TO DELETE HERE AS WELL
-    ON UPDATE NO ACTION
+    ON DELETE CASCADE -- `CASCADE` TO DELETE HERE AS WELL
+    ON UPDATE CASCADE
 );
 
 -- -----------------------------------------------------
@@ -74,13 +88,13 @@ CREATE TABLE IF NOT EXISTS `AGENDAMENTO` (
   CONSTRAINT `fk_CPF_Cliente_Agendamento`
     FOREIGN KEY (`CPF_Cliente`)
     REFERENCES `CLIENTE` (`CPF_Cliente`)
-    ON DELETE NO ACTION -- `CASCADE` TO DELETE HERE AS WELL
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE -- `CASCADE` TO DELETE HERE AS WELL
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_CPF_Profissional_Agendamento`
     FOREIGN KEY (`CPF_Profissional`)
     REFERENCES `PROFISSIONAL` (`CPF_Profissional`)
-    ON DELETE NO ACTION -- `CASCADE` TO DELETE HERE AS WELL
-    ON UPDATE NO ACTION
+    ON DELETE CASCADE -- `CASCADE` TO DELETE HERE AS WELL
+    ON UPDATE CASCADE
 );
 
 -- ------------------------------------------------------
@@ -114,13 +128,9 @@ SELECT * FROM AGENDAMENTO WHERE CPF_Profissional = '98765432100';
 -- DELETE FROM USUARIO
 -- ATENÇÃO, SIGA A SEQUENCIA INDICADA
 --
-SET FOREIGN_KEY_CHECKS=0; 
 DELETE FROM USUARIO WHERE CPF = '12345678900'; 
-SET FOREIGN_KEY_CHECKS=1;
 
 -- DELETE FROM AGENDAMENTO
 -- ATENÇÃO, SIGA A SEQUENCIA INDICADA
 --
-SET FOREIGN_KEY_CHECKS=0; 
-DELETE FROM AGENDAMENTO WHERE CPF_Cliente = '12345678900'; 
-SET FOREIGN_KEY_CHECKS=1;
+DELETE FROM AGENDAMENTO WHERE CPF_Cliente = '12345678900';
