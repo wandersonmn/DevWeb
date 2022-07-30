@@ -7,7 +7,23 @@ public class AGENDAMENTO {
 	private String data; /*pesquisar tipo adequado*/
 	private String hora; /*pesquisar tipo adequado*/
 	
-	
+	public AGENDAMENTO (CLIENTE cliente, 
+						PROFISSIONAL profissional, 
+						String status, 
+						String data, 
+						String hora
+						){
+		this.cliente = cliente;
+		this.profissional = profissional;
+		this.status = status;
+		this.data = data;
+		this.hora = hora;
+	}
+
+	public AGENDAMENTO (CLIENTE c, PROFISSIONAL p, String data, String hora){
+		this(c, p, "ativo", data, hora);
+	}
+
 	public CLIENTE getCliente() {
 		return cliente;
 	}

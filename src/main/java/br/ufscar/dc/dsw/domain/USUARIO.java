@@ -9,6 +9,18 @@ public class USUARIO {
 	private String telefone;
 	private String data_nascimento;
 	
+	
+	public USUARIO(String CPF, String email, String senha, String nome, String sexo, 
+			String telefone, String data_nascimento) {
+        this.CPF = CPF;
+        this.email = email;
+        this.senha = senha;
+        this.nome = nome;
+        this.sexo = sexo;
+        this.telefone= telefone;
+        this.data_nascimento = data_nascimento;
+    }
+	
 	public String getCPF() {
 		return CPF;
 	}
