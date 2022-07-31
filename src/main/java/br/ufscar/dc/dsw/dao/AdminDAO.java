@@ -8,26 +8,21 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufscar.dc.dsw.domain.USUARIO;
+import br.ufscar.dc.dsw.domain.ADMIN;
 
-public class UsuarioDAO extends GenericDAO {
+public class AdminDAO extends GenericDAO {
 
-    public void insert(USUARIO usuario) {
+    public void insert(ADMIN admin) {
+        UsuarioDAO dao = new UsuarioDAO();
+        dao.insert(admin);
 
-        String sql = "INSERT INTO USUARIO (CPF, email, senha, nome, sexo, "
-        		+ "telefone, data_nascimento) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO ADMIN (CPF_Cliente) VALUES (?)";
 
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setString(1, usuario.getCPF());
-            statement.setString(2, usuario.getEmail());
-            statement.setString(3, usuario.getSenha());
-            statement.setString(4, usuario.getNome());
-            statement.setString(5, usuario.getSexo());
-            statement.setString(6, usuario.getTelefone());
-            statement.setString(7, usuario.getData_nascimento());
+            statement.setString(1, admin.getCPF());
             statement.executeUpdate();
 
             statement.close();
@@ -37,11 +32,11 @@ public class UsuarioDAO extends GenericDAO {
         }
     }
 
-    public List<USUARIO> getAll() {
+    public List<ADMIN> getAll() {
 
-        List<USUARIO> listaUsuarios = new ArrayList<>();
+        List<ADMIN> listaClientes = new ArrayList<>();
 
-        String sql = "SELECT * from USUARIO u order by u.CPF";
+        String sql = "SELECT * from ADMIN p, USUARIO u where p.CPF_Adm = u.CPF order by p.CPF_Adm";
 
         try {
             Connection conn = this.getConnection();
@@ -56,9 +51,8 @@ public class UsuarioDAO extends GenericDAO {
                 String sexo = resultSet.getString("sexo");
                 String telefone = resultSet.getString("telefone");
                 String data_nascimento = resultSet.getString("data_nascimento");
-                USUARIO usuario =  new USUARIO(cpf, email, senha, nome, sexo, telefone, data_nascimento);
-               
-                listaUsuarios.add(usuario);
+                ADMIN admin = new ADMIN(cpf, email, senha, nome, sexo, telefone, data_nascimento);
+                listaClientes.add(admin);
             }
 
             resultSet.close();
@@ -67,17 +61,17 @@ public class UsuarioDAO extends GenericDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return listaUsuarios;
+        return listaClientes;
     }
 
-    public void delete(USUARIO usuario) {
-        String sql = "DELETE FROM USUARIO where CPF = ?";
+    public void delete(ADMIN admin) {
+        String sql = "DELETE FROM ADMIN where CPF_Adm = ?";
 
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setString(1, usuario.getCPF());
+            statement.setString(1, admin.getCPF());
             statement.executeUpdate();
 
             statement.close();
@@ -87,8 +81,8 @@ public class UsuarioDAO extends GenericDAO {
         }
     }
 
-    public void update(USUARIO usuario) {
-        String sql = "UPDATE USUARIO SET CPF = ?, email = ?, senha = ?, "
+    public void update(ADMIN admin) {
+        String sql = "UPDATE ADMIN SET CPF = ?, email = ?, senha = ?, "
         		+ "nome = ?, sexo = ?, telefone = ?, data_nascimento = ?";
         sql += "WHERE CPF = ?";
 
@@ -96,13 +90,13 @@ public class UsuarioDAO extends GenericDAO {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setString(1, usuario.getCPF());
-            statement.setString(2, usuario.getEmail());
-            statement.setString(3, usuario.getSenha());
-            statement.setString(4, usuario.getNome());
-            statement.setString(5, usuario.getSexo());
-            statement.setString(6, usuario.getTelefone());
-            statement.setString(7, usuario.getData_nascimento());
+            statement.setString(1, admin.getCPF());
+            statement.setString(2, admin.getEmail());
+            statement.setString(3, admin.getSenha());
+            statement.setString(4, admin.getNome());
+            statement.setString(5, admin.getSexo());
+            statement.setString(6, admin.getTelefone());
+            statement.setString(7, admin.getData_nascimento());
             statement.executeUpdate();
 
             statement.close();
@@ -112,10 +106,10 @@ public class UsuarioDAO extends GenericDAO {
         }
     }
 
-    public USUARIO get(String CPF) {
-        USUARIO usuario = null;
+    public ADMIN get(String CPF) {
+        ADMIN admin = null;
 
-        String sql = "SELECT * from USUARIO u where u.CPF = ?";
+        String sql = "SELECT * from ADMIN u where u.CPF = ?";
 
         try {
             Connection conn = this.getConnection();
@@ -132,8 +126,7 @@ public class UsuarioDAO extends GenericDAO {
                 String telefone = resultSet.getString("telefone");
                 String data_nascimento = resultSet.getString("data_nascimento");
                 
-
-                usuario = new USUARIO(cpf, email, senha, nome, sexo, telefone, data_nascimento);
+                admin = new ADMIN(cpf, email, senha, nome, sexo, telefone, data_nascimento);
             }
 
             resultSet.close();
@@ -142,6 +135,6 @@ public class UsuarioDAO extends GenericDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return usuario;
+        return admin;
     }
 }
