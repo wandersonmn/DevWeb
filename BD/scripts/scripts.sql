@@ -118,7 +118,7 @@ VALUES ('CPFEHSTRING','paulo@admin.com','adm','Paulo Administrador da Silva','M'
 -- 3 profissionais
 INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('98765432100','mecanico','fuselagem','/src/qualy/0243.pdf');
 INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('42069621000','medico','computadores','todas');
-INSERT INTO ADM (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('CPFEHSTRING','professor','redes','a maioria');
+INSERT INTO ADM (`CPF_Adm`) VALUES ('CPFEHSTRING');
 
 -- 1 cliente
 INSERT INTO CLIENTE (`CPF_Cliente`) VALUES ('12345678900');
@@ -129,9 +129,6 @@ VALUES ('12345678900','98765432100','2022-07-25','14:00:00.0000000');
 
 INSERT INTO AGENDAMENTO (`CPF_Cliente`,`CPF_Profissional`,`data`,`hora`) 
 VALUES ('12345678900','42069621000','2022-08-12','13:30:00.0000000');
-
-INSERT INTO AGENDAMENTO (`CPF_Cliente`,`CPF_Profissional`,`data`,`hora`) 
-VALUES ('12345678900','CPFEHSTRING','2022-10-03','13:31:00.0000000');
 
 -- listagem dos horarios de conulstas de um cliente
 SELECT * FROM AGENDAMENTO WHERE CPF_Cliente = '12345678900';

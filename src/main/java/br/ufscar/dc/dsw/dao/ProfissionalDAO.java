@@ -125,20 +125,25 @@ public class ProfissionalDAO extends GenericDAO {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            // Verifica se existe um profissional com esse CPF
+            // Verifica se existe um cliente com esse CPF
             statement.setString(1, CPF);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                resultSet.getString("cpf");
+            if (resultSet.next() == false) {
+                resultSet.close();
+                statement.close();
+                conn.close();
+                
+                return false;
+            } else {
+                resultSet.close();
+                statement.close();
+                conn.close();
+
+                return true;
             }
 
-            resultSet.close();
-            statement.close();
-            conn.close();
-
-            return true;
         } catch (SQLException e) {
-            return false;
+            throw new RuntimeException(e);
         }
     }
 

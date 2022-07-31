@@ -37,7 +37,7 @@ public class ProfissionalController extends HttpServlet {
     	if (usuario == null) {
     		response.sendRedirect(request.getContextPath());
     	} else if (Papel.Profissional == dao.getRole(usuario)) {
-    		RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/usuario/index.jsp");
+    		RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/profissional/conta.jsp");
             dispatcher.forward(request, response);
     	} else {
     		erros.add("Acesso não autorizado!");

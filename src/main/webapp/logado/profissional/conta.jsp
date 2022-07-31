@@ -13,7 +13,7 @@
 		String contextPath = request.getContextPath().replace("/", "");
 	    %>
         <div align="center">
-            <h1>Painel do Admin</h1>
+            <h1>Painel do Profissional</h1>
             <h3>
                 <a href="/<%=contextPath%>/login">Minha Conta</a>
             </h3>

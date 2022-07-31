@@ -35,7 +35,7 @@ public class ClienteController extends HttpServlet {
     	if (usuario == null) {
     		response.sendRedirect(request.getContextPath());
     	} else if (Papel.Cliente == dao.getRole(usuario)) {
-    		RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/usuario/index.jsp");
+    		RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/cliente/conta.jsp");
             dispatcher.forward(request, response);
     	} else {
     		erros.add("Acesso não autorizado!");
