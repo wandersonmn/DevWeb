@@ -8,6 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import br.ufscar.dc.dsw.dao.UsuarioDAO;
+import br.ufscar.dc.dsw.dao.UsuarioDAO.Papel;
 
 import br.ufscar.dc.dsw.domain.PROFISSIONAL;
 import br.ufscar.dc.dsw.domain.USUARIO;
@@ -28,10 +30,13 @@ public class ProfissionalController extends HttpServlet {
     	
     	USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
     	Erro erros = new Erro();
+		UsuarioDAO dao = new UsuarioDAO();
     	
+		System.out.println("== [LOG]: ProfissionalController");
+
     	if (usuario == null) {
     		response.sendRedirect(request.getContextPath());
-    	} else if (usuario instanceof PROFISSIONAL) {
+    	} else if (Papel.Profissional == dao.getRole(usuario)) {
     		RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/usuario/index.jsp");
             dispatcher.forward(request, response);
     	} else {

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.ufscar.dc.dsw.dao.UsuarioDAO;
+import br.ufscar.dc.dsw.dao.UsuarioDAO.Papel;
 import br.ufscar.dc.dsw.domain.PROFISSIONAL;
 import br.ufscar.dc.dsw.domain.USUARIO;
 import br.ufscar.dc.dsw.domain.ADMIN;
@@ -24,7 +25,7 @@ import br.ufscar.dc.dsw.util.Erro;
  * Se já autenticado, redireciona para "direcao"
  * Se não, apresenta tela de login, e redireciona para "direcao" ou página de erro
  */
-@WebServlet(name = "Index", urlPatterns = {"/login/*",})
+@WebServlet(name = "Index", urlPatterns = {"/login",})
 public class LoginController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -38,6 +39,9 @@ public class LoginController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Erro erros = new Erro();
+
+		System.out.println("== [LOG]: LoginController");
+
 		if (request.getParameter("bOK") != null) {
 			String login = request.getParameter("login");
 			String senha = request.getParameter("senha");
@@ -53,19 +57,20 @@ public class LoginController extends HttpServlet {
 				if (usuario != null) {
 					if (usuario.getSenha().equals(senha)) {
 						request.getSession().setAttribute("usuarioLogado", usuario);
-						if (usuario instanceof ADMIN) {
+						Papel p = dao.getRole(usuario);
+						System.out.println("==== Papel: " + p + " CPF: " + usuario.getCPF());
+						if (p == Papel.Admin) {
 							response.sendRedirect("admin/");
-						} else if (usuario instanceof PROFISSIONAL){
-						// } else if (usuario.getPapel().equals("PRO")){
+						} else if (p == Papel.Profissional){
 							response.sendRedirect("profissional/");
-						} else if (usuario instanceof CLIENTE){
+						} else if (p == Papel.Cliente){
 							response.sendRedirect("cliente/");
 						} else {
 							erros.add("Usuário não possui papel!");
 						}
 						return;
 					} else {
-						erros.add("Senha inválida!");
+						erros.add("Senha inválida!" + senha + " != " + usuario.getSenha());
 					}
 				} else {
 					erros.add("Usuário não encontrado!");

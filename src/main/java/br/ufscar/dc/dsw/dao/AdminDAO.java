@@ -105,6 +105,30 @@ public class AdminDAO extends GenericDAO {
             throw new RuntimeException(e);
         }
     }
+    
+    public boolean valid(String CPF) {
+        String sql = "SELECT * FROM ADM u where u.CPF = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            // Verifica se existe um admin com esse CPF
+            statement.setString(1, CPF);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                resultSet.getString("cpf");
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
 
     public ADMIN get(String CPF) {
         ADMIN admin = null;

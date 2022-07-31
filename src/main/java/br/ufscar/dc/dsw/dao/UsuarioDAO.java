@@ -11,6 +11,9 @@ import java.util.List;
 import br.ufscar.dc.dsw.domain.USUARIO;
 
 public class UsuarioDAO extends GenericDAO {
+    public enum Papel {
+        Cliente, Admin, Profissional, Nenhum
+    }
 
     public void insert(USUARIO usuario) {
 
@@ -34,6 +37,24 @@ public class UsuarioDAO extends GenericDAO {
             conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public Papel getRole(USUARIO usuario) {
+        // Verifica qual o papel específico do usuário
+        ProfissionalDAO proDAO = new ProfissionalDAO();
+        ClienteDAO clienteDAO = new ClienteDAO();
+        AdminDAO admDAO = new AdminDAO();
+
+        String CPF = usuario.getCPF();
+        if (proDAO.valid(CPF)){
+            return Papel.Profissional;
+        } else if (clienteDAO.valid(CPF)){
+            return Papel.Cliente;
+        } else if (admDAO.valid(CPF)){
+            return Papel.Admin;
+        } else {
+            return Papel.Nenhum;
         }
     }
 

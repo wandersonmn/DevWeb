@@ -106,6 +106,30 @@ public class ClienteDAO extends GenericDAO {
         }
     }
 
+    public boolean valid(String CPF) {
+        String sql = "SELECT * FROM CLIENTE u where u.CPF = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            // Verifica se existe um cliente com esse CPF
+            statement.setString(1, CPF);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println("====== CPF Cliente: " + resultSet.getString("cpf"));
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
     public CLIENTE get(String CPF) {
         CLIENTE cliente = null;
 

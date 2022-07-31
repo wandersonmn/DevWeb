@@ -35,6 +35,7 @@ public class ContaController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
+		System.out.println("== [LOG]: ContaController");
                 
         String action = request.getPathInfo();
         if (action == null) {

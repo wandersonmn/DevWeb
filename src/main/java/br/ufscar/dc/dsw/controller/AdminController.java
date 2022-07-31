@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.ufscar.dc.dsw.domain.USUARIO;
+import br.ufscar.dc.dsw.dao.UsuarioDAO;
+import br.ufscar.dc.dsw.dao.UsuarioDAO.Papel;
 import br.ufscar.dc.dsw.domain.ADMIN;
 // TODO: Remover comentário eventualmente
 // import br.ufscar.dc.dsw.domain.PROFISSIONAL;
@@ -27,14 +29,16 @@ public class AdminController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("== [LOG]: AdminController");
     	
     	USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
     	Erro erros = new Erro();
+		UsuarioDAO dao = new UsuarioDAO();
     	
     	if (usuario == null) {
     		response.sendRedirect(request.getContextPath());
-    	} else if (usuario instanceof ADMIN) {
-    		RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/index.jsp");
+    	} else if (Papel.Admin == dao.getRole(usuario)) {
+    		RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/conta.jsp");
             dispatcher.forward(request, response);
     	} else {
     		erros.add("Acesso não autorizado!");

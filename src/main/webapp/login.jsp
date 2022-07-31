@@ -19,7 +19,8 @@
                 </ul>
             </div>
         </c:if>
-        <form method="post" action="index.jsp">
+        <!-- Passa o controle para LoginController.java (Que tem urlpatterns = /login) após o submit -->
+        <form method="post" action="login">
             <table>
                 <tr>
                     <th>Login: </th>

@@ -4,9 +4,9 @@ import br.ufscar.dc.dsw.dao.ProfissionalDAO;
 import br.ufscar.dc.dsw.domain.PROFISSIONAL;
 
 import java.io.IOException;
-import java.util.HashMap;
+// import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+// import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,7 +35,9 @@ public class IndexController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
-                
+        
+		System.out.println("== [LOG]: IndexController");
+
         String action = request.getPathInfo();
         if (action == null) {
             action = "";
