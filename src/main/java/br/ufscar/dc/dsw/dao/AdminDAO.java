@@ -107,7 +107,7 @@ public class AdminDAO extends GenericDAO {
     }
     
     public boolean valid(String CPF) {
-        String sql = "SELECT * FROM ADM u where u.CPF = ?";
+        String sql = "SELECT * FROM ADM u where u.CPF_Adm = ?";
 
         try {
             Connection conn = this.getConnection();

@@ -107,7 +107,7 @@ public class ClienteDAO extends GenericDAO {
     }
 
     public boolean valid(String CPF) {
-        String sql = "SELECT * FROM CLIENTE u where u.CPF = ?";
+        String sql = "SELECT * FROM CLIENTE u where u.CPF_Cliente = ?";
 
         try {
             Connection conn = this.getConnection();
@@ -116,17 +116,22 @@ public class ClienteDAO extends GenericDAO {
             // Verifica se existe um cliente com esse CPF
             statement.setString(1, CPF);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                System.out.println("====== CPF Cliente: " + resultSet.getString("cpf"));
+            if (resultSet.next() == false) {
+                resultSet.close();
+                statement.close();
+                conn.close();
+                
+                return false;
+            } else {
+                resultSet.close();
+                statement.close();
+                conn.close();
+
+                return true;
             }
 
-            resultSet.close();
-            statement.close();
-            conn.close();
-
-            return true;
         } catch (SQLException e) {
-            return false;
+            throw new RuntimeException(e);
         }
     }
 

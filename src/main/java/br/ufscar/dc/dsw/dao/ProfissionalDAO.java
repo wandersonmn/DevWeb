@@ -119,7 +119,7 @@ public class ProfissionalDAO extends GenericDAO {
     }
 
     public boolean valid(String CPF) {
-        String sql = "SELECT * FROM PROFISSIONAL u where u.CPF = ?";
+        String sql = "SELECT * FROM PROFISSIONAL u where u.CPF_Profissional = ?";
 
         try {
             Connection conn = this.getConnection();
