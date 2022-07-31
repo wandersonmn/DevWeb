@@ -14,7 +14,7 @@ public class UsuarioDAO extends GenericDAO {
 
     public void insert(USUARIO usuario) {
 
-        String sql = "INSERT INTO USUARIO (CPF, email, senha, nome, sexo, "
+        String sql = "INSERT INTO BaseUsuario (CPF, email, senha, nome, sexo, "
         		+ "telefone, data_nascimento) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try {
@@ -41,7 +41,7 @@ public class UsuarioDAO extends GenericDAO {
 
         List<USUARIO> listaUsuarios = new ArrayList<>();
 
-        String sql = "SELECT * from USUARIO u order by u.CPF";
+        String sql = "SELECT * from BaseUsuario u order by u.CPF";
 
         try {
             Connection conn = this.getConnection();
@@ -71,7 +71,7 @@ public class UsuarioDAO extends GenericDAO {
     }
 
     public void delete(USUARIO usuario) {
-        String sql = "DELETE FROM USUARIO where CPF = ?";
+        String sql = "DELETE FROM BaseUsuario where CPF = ?";
 
         try {
             Connection conn = this.getConnection();
@@ -88,7 +88,7 @@ public class UsuarioDAO extends GenericDAO {
     }
 
     public void update(USUARIO usuario) {
-        String sql = "UPDATE USUARIO SET CPF = ?, email = ?, senha = ?, "
+        String sql = "UPDATE BaseUsuario SET CPF = ?, email = ?, senha = ?, "
         		+ "nome = ?, sexo = ?, telefone = ?, data_nascimento = ?";
         sql += "WHERE CPF = ?";
 
@@ -115,7 +115,7 @@ public class UsuarioDAO extends GenericDAO {
     public USUARIO get(String CPF) {
         USUARIO usuario = null;
 
-        String sql = "SELECT * from USUARIO u where u.CPF = ?";
+        String sql = "SELECT * from BaseUsuario u where u.CPF = ?";
 
         try {
             Connection conn = this.getConnection();
