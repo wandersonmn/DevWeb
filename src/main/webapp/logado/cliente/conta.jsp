@@ -33,7 +33,7 @@
                         <td>${profissional.getNome()}</td>
                         <td>${profissional.getArea_atuacao()}</td>
                         <td>${profissional.getEspecialidade()}</td>
-                        <td><a href="/<%= contextPath%>/profissional/agendar?id=${profissional.getCPF()}">Agendar</a></a></td>
+                        <td><a href="/<%= contextPath%>/agendar?cpf_profissional=${profissional.getCPF()}">Agendar</a></a></td>
                     </tr>
                 </c:forEach>
             </table>

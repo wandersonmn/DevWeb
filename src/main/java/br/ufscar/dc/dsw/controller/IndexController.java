@@ -1,12 +1,15 @@
 package br.ufscar.dc.dsw.controller;
 
+import br.ufscar.dc.dsw.domain.CLIENTE;
 import br.ufscar.dc.dsw.dao.ProfissionalDAO;
 import br.ufscar.dc.dsw.domain.PROFISSIONAL;
+import br.ufscar.dc.dsw.dao.AgendamentoDAO;
+import br.ufscar.dc.dsw.domain.AGENDAMENTO;
 
 import java.io.IOException;
-// import java.util.HashMap;
+import java.util.HashMap;
 import java.util.List;
-// import java.util.Map;
+import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,11 +22,13 @@ public class IndexController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     
-    private ProfissionalDAO dao;
+    private ProfissionalDAO pDao;
+    private AgendamentoDAO aDao;
 
     @Override
     public void init() {
-        dao = new ProfissionalDAO();
+        pDao = new ProfissionalDAO();
+        aDao = new AgendamentoDAO();
     }
 
     @Override
@@ -43,18 +48,27 @@ public class IndexController extends HttpServlet {
             action = "";
         }
 
+        // try {
+        //     switch (action) {
+		// 		// ! Não sei se é o ideal colocar o agendamento e a conta aqui
+        //         case "/agendar":
+        //             agendar(request, response); // TODO: mudar
+        //             break;
+        //         default:
+        //             lista(request, response);
+        //     } catch (RuntimeException | IOException | ServletException e) {
+        //         throw new ServletException(e);
+        //     }
+        
+        // }
         try {
             switch (action) {
-				// ! Não sei se é o ideal colocar o agendamento e a conta aqui
+                // ! Não sei se é o ideal colocar o agendamento e a conta aqui
                 case "/agendar":
-                    lista(request, response); // TODO: mudar
-                    break;
-                case "/conta":
-					lista(request, response); // TODO: mudar
+                    agendar(request, response); // TODO: mudar
                     break;
                 default:
                     lista(request, response);
-                    break;
             }
         } catch (RuntimeException | IOException | ServletException e) {
             throw new ServletException(e);
@@ -63,19 +77,21 @@ public class IndexController extends HttpServlet {
 
     private void lista(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<PROFISSIONAL> listaProfissionais = dao.getAll();
+        List<PROFISSIONAL> listaProfissionais = pDao.getAll();
         request.setAttribute("listaProfissionais", listaProfissionais);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/inicial.jsp");
         dispatcher.forward(request, response);
     }
 
-    // private Map<Long, String> getEditoras() {
-    //     Map <Long,String> editoras = new HashMap<>();
-    //     for (Editora editora: new EditoraDAO().getAll()) {
-    //         editoras.put(editora.getId(), editora.getNome());
-    //     }
-    //     return editoras;
-    // }
+    private void agendar(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        String cpf_profissional = request.getParameter("CPF_Profissional");
+        PROFISSIONAL profissional = pDao.get(cpf_profissional);
+        request.setAttribute("profissional", profissional);
+        request.setAttribute("agendamentos", aDao.getAllProfissional(profissional.getCPF()));
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/profissional/formulario.jsp");
+        dispatcher.forward(request, response);
+    }
     
     // private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
     //         throws ServletException, IOException {
