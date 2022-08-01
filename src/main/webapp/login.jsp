@@ -27,7 +27,7 @@
             <table>
                 <tr>
                     <th>Login: </th>
-                    <td><input type="text" name="login" placeholder="Email"
+                    <td><input type="email" name="login" placeholder="Email"
                                value="${param.login}"/></td>
                 </tr>
                 <tr>
