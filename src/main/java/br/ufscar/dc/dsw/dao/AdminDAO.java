@@ -16,7 +16,7 @@ public class AdminDAO extends GenericDAO {
         UsuarioDAO dao = new UsuarioDAO();
         dao.insert(admin);
 
-        String sql = "INSERT INTO ADMIN (CPF_Cliente) VALUES (?)";
+        String sql = "INSERT INTO ADMIN (CPF_Adm) VALUES (?)";
 
         try {
             Connection conn = this.getConnection();
@@ -36,7 +36,7 @@ public class AdminDAO extends GenericDAO {
 
         List<ADMIN> listaClientes = new ArrayList<>();
 
-        String sql = "SELECT * from ADMIN p, USUARIO u where p.CPF_Adm = u.CPF order by p.CPF_Adm";
+        String sql = "SELECT * from ADM p, USUARIO u where p.CPF_Adm = u.CPF order by p.CPF_Adm";
 
         try {
             Connection conn = this.getConnection();
@@ -65,7 +65,7 @@ public class AdminDAO extends GenericDAO {
     }
 
     public void delete(ADMIN admin) {
-        String sql = "DELETE FROM ADMIN where CPF_Adm = ?";
+        String sql = "DELETE FROM ADM where CPF_Adm = ?";
 
         try {
             Connection conn = this.getConnection();
@@ -82,7 +82,7 @@ public class AdminDAO extends GenericDAO {
     }
 
     public void update(ADMIN admin) {
-        String sql = "UPDATE ADMIN SET CPF = ?, email = ?, senha = ?, "
+        String sql = "UPDATE ADM SET CPF_Adm = ?, email = ?, senha = ?, "
         		+ "nome = ?, sexo = ?, telefone = ?, data_nascimento = ?";
         sql += "WHERE CPF = ?";
 

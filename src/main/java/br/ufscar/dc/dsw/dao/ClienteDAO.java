@@ -65,6 +65,7 @@ public class ClienteDAO extends GenericDAO {
     }
 
     public void delete(CLIENTE cliente) {
+    	// deve-se deletar de usuario, no cliente sera deletado por cascade
         String sql = "DELETE FROM CLIENTE where CPF_Cliente = ?";
 
         try {
