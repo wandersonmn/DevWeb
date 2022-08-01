@@ -103,6 +103,7 @@ CREATE TABLE IF NOT EXISTS `AGENDAMENTO` (
 -- !!! OS VALORES DEVEM ESTAR ENTRE ASPAS SIMPLES (') !!!
 
 -- 4 usuarios
+
 INSERT INTO USUARIO (`CPF`,`email`,`senha`,`nome`,`sexo`,`telefone`,`data_nascimento`) 
 VALUES ('12345678900','user1@gmail.com','usr','Glauber Cliente da Silva','M','5511970707070','2000-12-21');
 
@@ -123,12 +124,28 @@ INSERT INTO ADM (`CPF_Adm`) VALUES ('CPFEHSTRING');
 -- 1 cliente
 INSERT INTO CLIENTE (`CPF_Cliente`) VALUES ('12345678900');
 
+-- Usuário VAZIO
+INSERT INTO USUARIO (`CPF`,`email`,`senha`,`nome`,`sexo`,`telefone`,`data_nascimento`) 
+VALUES ('VAZIO','USUARIO_VAZIO','USUARIO_VAZIO','USUARIO_VAZIO','M','USUARIO_VAZIO','USUARIO_VAZIO');
+
+INSERT INTO CLIENTE (`CPF_Cliente`) VALUES ('VAZIO'); 
+
 -- 1 agendamento entre o cliente e o usuario criados anteriormente
 INSERT INTO AGENDAMENTO (`CPF_Cliente`,`CPF_Profissional`,`data`,`hora`) 
 VALUES ('12345678900','98765432100','2022-07-25','14:00:00.0000000');
 
 INSERT INTO AGENDAMENTO (`CPF_Cliente`,`CPF_Profissional`,`data`,`hora`) 
 VALUES ('12345678900','42069621000','2022-08-12','13:30:00.0000000');
+
+-- Inserindo alguns horários "vazios"
+INSERT INTO AGENDAMENTO (`CPF_Cliente`,`CPF_Profissional`,`data`,`hora`) 
+VALUES ('VAZIO','42069621000','2022-08-13','13:30:00.0000000');
+
+INSERT INTO AGENDAMENTO (`CPF_Cliente`,`CPF_Profissional`,`data`,`hora`) 
+VALUES ('VAZIO','42069621000','2022-08-14','13:30:00.0000000');
+
+INSERT INTO AGENDAMENTO (`CPF_Cliente`,`CPF_Profissional`,`data`,`hora`) 
+VALUES ('VAZIO','42069621000','2022-08-15','13:30:00.0000000');
 
 -- listagem dos horarios de conulstas de um cliente
 SELECT * FROM AGENDAMENTO WHERE CPF_Cliente = '12345678900';

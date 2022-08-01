@@ -45,7 +45,23 @@ public class ClienteController extends HttpServlet {
     		RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
 			dispatcher.forward(request, response);
     	} else if (Papel.Cliente == dao.getRole(usuario)) {
-            lista(request, response);
+            // Confirmado que o usuário está logado
+            String action = request.getPathInfo();
+            if (action == null) {
+                action = "";
+            }
+
+            try {
+                switch (action) {
+                    case "/agendar":
+                        agendar(request, response); // TODO: mudar
+                        break;
+                    default:
+                        lista(request, response);
+                }
+            } catch (RuntimeException | IOException | ServletException e) {
+                throw new ServletException(e);
+            }
     	} else {
     		erros.add("Acesso não autorizado!");
     		erros.add("Apenas Papel [CLIENT] tem acesso a essa página");
@@ -54,6 +70,7 @@ public class ClienteController extends HttpServlet {
     		rd.forward(request, response);
     	}    	
     }
+
     private void lista(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
@@ -61,6 +78,17 @@ public class ClienteController extends HttpServlet {
         List<AGENDAMENTO> listaAgendamentos = Agdao.getAllCliente(cpf);
         request.setAttribute("listaAgendamentos", listaAgendamentos);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/cliente/conta.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void agendar(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String cpf_profissional = (String)request.getAttribute("cpf");
+        String nome_profissional = (String)request.getAttribute("nome");
+        List<AGENDAMENTO> listaHorariosDisponiveis = Agdao.getDisp(cpf_profissional);
+        request.setAttribute("listaHorariosDisponiveis", listaHorariosDisponiveis);
+        request.setAttribute("nomeProfissional", nome_profissional);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/cliente/agendar.jsp");
         dispatcher.forward(request, response);
     }
 }

@@ -34,6 +34,77 @@ public class AgendamentoDAO extends GenericDAO {
         }
     }
 
+    // Por profissional
+    public List<AGENDAMENTO> getDisp(String CPF_Profissional) {
+        List<AGENDAMENTO> listaAgendamentos = new ArrayList<>();
+
+        String sql = "SELECT * from AGENDAMENTO WHERE CPF_Cliente = 'VAZIO' AND CPF_Profissional = '" + CPF_Profissional + "' ORDER BY data, hora";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            // statement.setString(1, CPF_Profissional);
+
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                String CPF_Cliente = resultSet.getString("CPF_Cliente");
+                // String CPF_Profissional = resultSet.getString("CPF_Profissional");
+                String data = resultSet.getString("data");
+                String hora = resultSet.getString("hora");
+                String status = resultSet.getString("status");
+
+                ClienteDAO cdao = new ClienteDAO();
+                ProfissionalDAO fdao = new ProfissionalDAO();
+
+                AGENDAMENTO agendamento = new AGENDAMENTO(cdao.get(CPF_Cliente), fdao.get(CPF_Profissional),status, data, hora);
+                listaAgendamentos.add(agendamento);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaAgendamentos;    
+    }
+
+    public List<AGENDAMENTO> getOcup(String CPF_Profissional) {
+        List<AGENDAMENTO> listaAgendamentos = new ArrayList<>();
+
+        String sql = "SELECT * from AGENDAMENTO WHERE CPF_Cliente != 'VAZIO' AND CPF_Profissional = '" + CPF_Profissional + "' ORDER BY data, hora";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            // statement.setString(1, CPF_Profissional);
+
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                String CPF_Cliente = resultSet.getString("CPF_Cliente");
+                // String CPF_Profissional = resultSet.getString("CPF_Profissional");
+                String data = resultSet.getString("data");
+                String hora = resultSet.getString("hora");
+                String status = resultSet.getString("status");
+
+                ClienteDAO cdao = new ClienteDAO();
+                ProfissionalDAO fdao = new ProfissionalDAO();
+
+                AGENDAMENTO agendamento = new AGENDAMENTO(cdao.get(CPF_Cliente), fdao.get(CPF_Profissional),status, data, hora);
+                listaAgendamentos.add(agendamento);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaAgendamentos;    
+    }
+
     public List<AGENDAMENTO> getAll() {
 
         List<AGENDAMENTO> listaAgendamentos = new ArrayList<>();

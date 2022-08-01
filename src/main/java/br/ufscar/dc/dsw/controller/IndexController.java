@@ -63,10 +63,6 @@ public class IndexController extends HttpServlet {
         // }
         try {
             switch (action) {
-                // ! Não sei se é o ideal colocar o agendamento e a conta aqui
-                case "/agendar":
-                    agendar(request, response); // TODO: mudar
-                    break;
                 default:
                     lista(request, response);
             }
@@ -83,15 +79,15 @@ public class IndexController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private void agendar(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
-        String cpf_profissional = request.getParameter("CPF_Profissional");
-        PROFISSIONAL profissional = pDao.get(cpf_profissional);
-        request.setAttribute("profissional", profissional);
-        request.setAttribute("agendamentos", aDao.getAllProfissional(profissional.getCPF()));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/profissional/formulario.jsp");
-        dispatcher.forward(request, response);
-    }
+    // private void agendar(HttpServletRequest request, HttpServletResponse response) 
+    //         throws ServletException, IOException {
+    //     String cpf_profissional = request.getParameter("CPF_Profissional");
+    //     PROFISSIONAL profissional = pDao.get(cpf_profissional);
+    //     request.setAttribute("profissional", profissional);
+    //     request.setAttribute("agendamentos", aDao.getAllProfissional(profissional.getCPF()));
+    //     RequestDispatcher dispatcher = request.getRequestDispatcher("/profissional/formulario.jsp");
+    //     dispatcher.forward(request, response);
+    // }
     
     // private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
     //         throws ServletException, IOException {
