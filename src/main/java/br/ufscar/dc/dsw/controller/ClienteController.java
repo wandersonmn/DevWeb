@@ -1,6 +1,8 @@
 package br.ufscar.dc.dsw.controller;
 
 import java.io.IOException;
+import java.util.EnumSet;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -9,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 import br.ufscar.dc.dsw.dao.UsuarioDAO.Papel;
 import br.ufscar.dc.dsw.domain.USUARIO;
@@ -22,10 +25,14 @@ public class ClienteController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
     private AgendamentoDAO Agdao;
+    private ProfissionalDAO pDao;
+    private ClienteDAO cDao;
     
     @Override
     public void init() {
         Agdao = new AgendamentoDAO();
+        pDao = new ProfissionalDAO();
+        cDao = new ClienteDAO();
     }
     
     @Override
@@ -54,10 +61,14 @@ public class ClienteController extends HttpServlet {
             try {
                 switch (action) {
                     case "/agendar":
-                        agendar(request, response); // TODO: mudar
+                        agendar(request, response);
+                        break;
+                    case "/agendarHorario":
+                        agendarHorario(request, response);
                         break;
                     default:
                         lista(request, response);
+                        break;
                 }
             } catch (RuntimeException | IOException | ServletException e) {
                 throw new ServletException(e);
@@ -83,12 +94,27 @@ public class ClienteController extends HttpServlet {
 
     private void agendar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String cpf_profissional = (String)request.getAttribute("cpf");
-        String nome_profissional = (String)request.getAttribute("nome");
+        String cpf_profissional = (String)request.getParameter("cpf");
+        String nome_profissional = (String)request.getParameter("nome");
         List<AGENDAMENTO> listaHorariosDisponiveis = Agdao.getDisp(cpf_profissional);
         request.setAttribute("listaHorariosDisponiveis", listaHorariosDisponiveis);
         request.setAttribute("nomeProfissional", nome_profissional);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/cliente/agendar.jsp");
         dispatcher.forward(request, response);
+    }
+
+    private void agendarHorario(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    String cpf_profissional = (String)request.getParameter("pro");
+    String data = (String)request.getParameter("data");
+    String hora = (String)request.getParameter("hora");
+    // Inserindo consulta no BD
+    USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
+    CLIENTE cliente = cDao.get(usuario.getCPF());
+    PROFISSIONAL profissional = pDao.get(cpf_profissional);
+    AGENDAMENTO agendamento = new AGENDAMENTO(cliente, profissional, data, hora);
+    Agdao.insert(agendamento);
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/cliente.jsp");
+    dispatcher.forward(request, response);
     }
 }

@@ -13,8 +13,7 @@
 		String contextPath = request.getContextPath().replace("/", "");
 	    %>
         <div align="center">
-            <c:set var = "nome_pro" value = "${requestScope.nomeProfissional}"/>
-            <h1>Agendando com <c:out value = "${nome_pro}"/></h1>
+            <h1>Agendando com ${nomeProfissional}</h1>
             <h3>
                 <a href="/<%=contextPath%>/">Inicio</a>
             </h3>
@@ -32,11 +31,11 @@
                     <th>Ações</th>
                     
                 </tr>
-                <c:forEach var="agenda" items="${requestScope.listaHorariosDisponiveis}">
+                <c:forEach var="agenda" items="${listaHorariosDisponiveis}">
                     <tr>
-                        <td>${agenda.getData()}</td>
-                        <td>${agenda.getHora()}</td>
-                        <td><a href="/<%= contextPath%>/cliente/agendarHorario?data=${agenda.getData}&hora=${agenda.getHora}}">Selecionar Horário</a></a></td>
+                        <td><c:out value="${agenda.getData()}"/></td>
+                        <td><c:out value="${agenda.getHora()}"/></td>
+                        <td><a href="/<%= contextPath%>/cliente/agendarHorario?pro=${agenda.getProfissional().getCPF()}&data=${agenda.getData()}&hora=${agenda.getHora()}}">Selecionar Horário</a></a></td>
                     </tr>
                 </c:forEach>
             </table>
