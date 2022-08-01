@@ -52,12 +52,12 @@ public class LoginController extends HttpServlet {
 			}
 			if (!erros.isExisteErros()) {
 				UsuarioDAO dao = new UsuarioDAO();
-				USUARIO usuario = dao.get(login); // ! Login == CPF do usuário
+				USUARIO usuario = dao.getByMail(login); // ! Login == Email do usuário
 				if (usuario != null) {
 					if (usuario.getSenha().equals(senha)) {
 						request.getSession().setAttribute("usuarioLogado", usuario);
 						Papel p = dao.getRole(usuario);
-						System.out.println("==== Papel: " + p + " CPF: " + usuario.getCPF());
+						System.out.println("==== Papel: " + p + " Email: " + usuario.getEmail());
 						if (p == Papel.Admin) {
 							response.sendRedirect("admin/");
 						} else if (p == Papel.Profissional){
@@ -69,7 +69,7 @@ public class LoginController extends HttpServlet {
 						}
 						return;
 					} else {
-						erros.add("Senha inválida!" + senha + " != " + usuario.getSenha());
+						erros.add("Senha inválida!");
 					}
 				} else {
 					erros.add("Usuário não encontrado!");
