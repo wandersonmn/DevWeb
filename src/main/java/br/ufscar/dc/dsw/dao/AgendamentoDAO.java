@@ -20,8 +20,8 @@ public class AgendamentoDAO extends GenericDAO {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setString(2, agendamento.getCliente().getCPF());
-            statement.setString(1, agendamento.getProfissional().getCPF());
+            statement.setString(1, agendamento.getCliente().getCPF());
+            statement.setString(2, agendamento.getProfissional().getCPF());
             statement.setString(3, agendamento.getData());
             statement.setString(4, agendamento.getHora());
        
@@ -55,7 +55,7 @@ public class AgendamentoDAO extends GenericDAO {
                 ClienteDAO cdao = new ClienteDAO();
                 ProfissionalDAO fdao = new ProfissionalDAO();
 
-                AGENDAMENTO agendamento = new AGENDAMENTO(cdao.get(CPF_Cliente), fdao.get(CPF_Profissional), data, hora, status);
+                AGENDAMENTO agendamento = new AGENDAMENTO(cdao.get(CPF_Cliente), fdao.get(CPF_Profissional),status, data, hora);
                 listaAgendamentos.add(agendamento);
             }
 
@@ -92,7 +92,7 @@ public class AgendamentoDAO extends GenericDAO {
                 ClienteDAO cdao = new ClienteDAO();
                 ProfissionalDAO fdao = new ProfissionalDAO();
 
-                AGENDAMENTO agendamento = new AGENDAMENTO(cdao.get(CPF_Cliente), fdao.get(CPF_Profissional), data, hora, status);
+                AGENDAMENTO agendamento = new AGENDAMENTO(cdao.get(CPF_Cliente), fdao.get(CPF_Profissional),status, data, hora);
                 listaAgendamentos.add(agendamento);
             }
 
@@ -129,7 +129,7 @@ public class AgendamentoDAO extends GenericDAO {
                 ClienteDAO cdao = new ClienteDAO();
                 ProfissionalDAO fdao = new ProfissionalDAO();
 
-                AGENDAMENTO agendamento = new AGENDAMENTO(cdao.get(CPF_Cliente), fdao.get(CPF_Profissional), data, hora, status);
+                AGENDAMENTO agendamento = new AGENDAMENTO(cdao.get(CPF_Cliente), fdao.get(CPF_Profissional),status,  data, hora);
                 listaAgendamentos.add(agendamento);
             }
 

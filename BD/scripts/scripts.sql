@@ -136,6 +136,8 @@ SELECT * FROM AGENDAMENTO WHERE CPF_Cliente = '12345678900';
 -- listagem dos horarios de conulstas de um profissional
 SELECT * FROM AGENDAMENTO WHERE CPF_Profissional = '98765432100';
 
+select * from USUARIO
+
 -- DELETE FROM USUARIO
 -- ATENÇÃO, SIGA A SEQUENCIA INDICADA
 --

@@ -33,8 +33,8 @@
                     <tr>
                         <td>${agenda.getProfissional().getNome()}</td>
                         <td>${agenda.getProfissional().getEspecialidade()}</td>
-                        <td>${agenda.data}</td>
-                        <td>${agenda.hora}</td>
+                        <td>${agenda.getData()}</td>
+                        <td>${agenda.getHora()}</td>
                     </tr>
                 </c:forEach>
             </table>

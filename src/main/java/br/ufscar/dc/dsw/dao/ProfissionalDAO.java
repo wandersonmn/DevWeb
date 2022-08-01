@@ -25,7 +25,7 @@ public class ProfissionalDAO extends GenericDAO {
         UsuarioDAO udao = new UsuarioDAO();
         udao.insert(profissional);
 
-        String sql = "INSERT INTO PROFISSIONAL (CPF_Profissional, area_atuacao, especialidade, qualificacoes) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO PROFISSIONAL (CPF_Profissional, area_atuacao, especialidade, qualificacoes) VALUES (?, ?, ?, ?)";
 
         try {
             Connection conn = this.getConnection();
@@ -109,6 +109,7 @@ public class ProfissionalDAO extends GenericDAO {
             statement.setString(2, profissional.getArea_atuacao());
             statement.setString(3, profissional.getEspecialidade());
             statement.setString(4, profissional.getQualificacoes());
+            statement.setString(5, profissional.getCPF());
             statement.executeUpdate();
 
             statement.close();
