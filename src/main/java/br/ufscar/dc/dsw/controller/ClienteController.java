@@ -42,7 +42,8 @@ public class ClienteController extends HttpServlet {
 		UsuarioDAO dao = new UsuarioDAO();
     	
     	if (usuario == null) {
-    		response.sendRedirect(request.getContextPath());
+    		RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
+			dispatcher.forward(request, response);
     	} else if (Papel.Cliente == dao.getRole(usuario)) {
             lista(request, response);
     	} else {

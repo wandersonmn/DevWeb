@@ -15,7 +15,10 @@
         <div align="center">
             <h1>Painel do Profissional</h1>
             <h3>
-                <a href="/<%=contextPath%>/login">Inicio</a>
+                <a href="/<%=contextPath%>/">Inicio</a>
+            </h3>
+            <h3>
+                <a href="/<%=contextPath%>/login">Logout</a>
             </h3>
         </div>
 

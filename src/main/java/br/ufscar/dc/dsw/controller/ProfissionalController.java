@@ -46,7 +46,7 @@ public class ProfissionalController extends HttpServlet {
 		System.out.println("== [LOG]: ProfissionalController");
 
     	if (usuario == null) {
-    		RequestDispatcher dispatcher = request.getRequestDispatcher("/login/");
+    		RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
 			dispatcher.forward(request, response);
     	} else if (Papel.Profissional == dao.getRole(usuario)) {
     		lista(request, response);
@@ -62,6 +62,7 @@ public class ProfissionalController extends HttpServlet {
             throws ServletException, IOException {
     	USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
     	String cpf = usuario.getCPF();
+		System.out.println(cpf);
         List<AGENDAMENTO> listaAgendamentos = Agdao.getAllProfissional(cpf);
         request.setAttribute("listaAgendamentos", listaAgendamentos);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/profissional/conta.jsp");
