@@ -21,19 +21,21 @@
 
         <div align="center">
             <table border="1">
-                <caption>Profissionais Disponíveis</caption>
+                <caption>Consultas agendadas</caption>
                 <tr>
-                    <th>Nome</th>
-                    <th>Área de Atuação</th>
+                    <th>Profissional</th>
                     <th>Especialidade</th>
-                    <th>Ações</th>
+                    <th>Data</th>
+                    <th>Hora</th>
+                    
+                    
                 </tr>
-                <c:forEach var="profissional" items="${requestScope.listaProfissionais}">
+                <c:forEach var="agenda" items="${requestScope.listaAgendamentos}">
                     <tr>
-                        <td>${profissional.getNome()}</td>
-                        <td>${profissional.getArea_atuacao()}</td>
-                        <td>${profissional.getEspecialidade()}</td>
-                        <td><a href="/<%= contextPath%>/profissional/agendar?id=${profissional.getCPF()}">Agendar</a></a></td>
+                        <td>${agenda.status}</td>
+                        <td>${agenda.status}</td>
+                        <td>${agenda.data}</td>
+                        <td>${agenda.hora}</td>
                     </tr>
                 </c:forEach>
             </table>

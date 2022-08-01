@@ -116,9 +116,9 @@ public class AgendamentoDAO extends GenericDAO {
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement.setString(1, CPF_Cliente);
-            statement.executeUpdate();
+            statement.executeQuery();
             
-            ResultSet resultSet = statement.executeQuery(sql);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 CPF_Cliente = resultSet.getString("CPF_Cliente");
                 String CPF_Profissional = resultSet.getString("CPF_Profissional");

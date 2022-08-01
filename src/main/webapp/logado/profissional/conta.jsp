@@ -21,7 +21,7 @@
 
         <div align="center">
             <table border="1">
-                <caption>Profissionais Disponíveis</caption>
+                <caption>consultas</caption>
                 <tr>
                     <th>Nome</th>
                     <th>Área de Atuação</th>
