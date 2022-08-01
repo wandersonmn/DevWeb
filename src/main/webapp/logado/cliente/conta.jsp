@@ -28,12 +28,11 @@
                     <th>Data</th>
                     <th>Hora</th>
                     
-                    
                 </tr>
                 <c:forEach var="agenda" items="${requestScope.listaAgendamentos}">
                     <tr>
-                        <td>${agenda.status}</td>
-                        <td>${agenda.status}</td>
+                        <td>${agenda.getProfissional().getNome()}</td>
+                        <td>${agenda.getProfissional().getEspecialidade()}</td>
                         <td>${agenda.data}</td>
                         <td>${agenda.hora}</td>
                     </tr>

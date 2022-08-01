@@ -150,7 +150,7 @@ public class ProfissionalDAO extends GenericDAO {
     public PROFISSIONAL get(String CPF_Profissional) {
         PROFISSIONAL profissional = null;
 
-        String sql = "SELECT * from PROFISSIONAL p inner join USUARIO u on (p.CPF_Profissional = u.CPF) p where p.CPF_Profissional = ?";
+        String sql = "SELECT * from PROFISSIONAL p inner join USUARIO u on (p.CPF_Profissional = u.CPF) where p.CPF_Profissional = ?";
 
         try {
             Connection conn = this.getConnection();
