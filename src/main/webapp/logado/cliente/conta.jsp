@@ -31,17 +31,10 @@
                 </tr>
                 <c:forEach var="agenda" items="${requestScope.listaAgendamentos}">
                     <tr>
-<<<<<<< HEAD
                         <td>${agenda.getProfissional().getNome()}</td>
                         <td>${agenda.getProfissional().getEspecialidade()}</td>
                         <td>${agenda.data}</td>
                         <td>${agenda.hora}</td>
-=======
-                        <td>${profissional.getNome()}</td>
-                        <td>${profissional.getArea_atuacao()}</td>
-                        <td>${profissional.getEspecialidade()}</td>
-                        <td><a href="/<%= contextPath%>/agendar?cpf_profissional=${profissional.getCPF()}">Agendar</a></a></td>
->>>>>>> 8bbf75e8b623361e7e1d71d682ea4f6efabba1f8
                     </tr>
                 </c:forEach>
             </table>
