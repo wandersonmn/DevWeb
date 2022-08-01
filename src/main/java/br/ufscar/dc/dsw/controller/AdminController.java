@@ -13,8 +13,7 @@ import br.ufscar.dc.dsw.domain.USUARIO;
 import br.ufscar.dc.dsw.dao.UsuarioDAO;
 import br.ufscar.dc.dsw.dao.UsuarioDAO.Papel;
 import br.ufscar.dc.dsw.domain.ADMIN;
-// TODO: Remover comentário eventualmente
-// import br.ufscar.dc.dsw.domain.PROFISSIONAL;
+import br.ufscar.dc.dsw.domain.PROFISSIONAL;
 import br.ufscar.dc.dsw.util.Erro;
 
 @WebServlet(urlPatterns = "/admin/*")

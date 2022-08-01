@@ -35,7 +35,8 @@ public class ProfissionalController extends HttpServlet {
 		System.out.println("== [LOG]: ProfissionalController");
 
     	if (usuario == null) {
-    		response.sendRedirect(request.getContextPath());
+    		RequestDispatcher dispatcher = request.getRequestDispatcher("/login/");
+			dispatcher.forward(request, response);
     	} else if (Papel.Profissional == dao.getRole(usuario)) {
     		RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/profissional/conta.jsp");
             dispatcher.forward(request, response);
