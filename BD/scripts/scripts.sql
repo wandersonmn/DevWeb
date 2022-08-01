@@ -123,6 +123,9 @@ INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qua
 VALUES ('42069621000','medico','computadores','todas');
 
 INSERT INTO ADM (`CPF_Adm`) VALUES ('CPFEHSTRING');
+INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('98765432100','mecanico','fuselagem','/src/qualy/0243.pdf');
+INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('42069621000','medico','computadores','todas');
+INSERT INTO ADM (`CPF_Adm`) VALUES ('CPFEHSTRING');
 
 -- 1 cliente
 INSERT INTO CLIENTE (`CPF_Cliente`) VALUES ('12345678900');

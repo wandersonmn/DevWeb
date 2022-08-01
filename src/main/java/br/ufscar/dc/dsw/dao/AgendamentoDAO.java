@@ -20,8 +20,8 @@ public class AgendamentoDAO extends GenericDAO {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setString(2, agendamento.getCliente().getCPF());
-            statement.setString(1, agendamento.getProfissional().getCPF());
+            statement.setString(1, agendamento.getCliente().getCPF());
+            statement.setString(2, agendamento.getProfissional().getCPF());
             statement.setString(3, agendamento.getData());
             statement.setString(4, agendamento.getHora());
        
@@ -55,7 +55,7 @@ public class AgendamentoDAO extends GenericDAO {
                 ClienteDAO cdao = new ClienteDAO();
                 ProfissionalDAO fdao = new ProfissionalDAO();
 
-                AGENDAMENTO agendamento = new AGENDAMENTO(cdao.get(CPF_Cliente), fdao.get(CPF_Profissional), data, hora, status);
+                AGENDAMENTO agendamento = new AGENDAMENTO(cdao.get(CPF_Cliente), fdao.get(CPF_Profissional),status, data, hora);
                 listaAgendamentos.add(agendamento);
             }
 
@@ -79,9 +79,8 @@ public class AgendamentoDAO extends GenericDAO {
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement.setString(1, CPF_Profissional);
-            statement.executeUpdate();
 
-            ResultSet resultSet = statement.executeQuery(sql);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 String CPF_Cliente = resultSet.getString("CPF_Cliente");
                 CPF_Profissional = resultSet.getString("CPF_Profissional");
@@ -92,7 +91,7 @@ public class AgendamentoDAO extends GenericDAO {
                 ClienteDAO cdao = new ClienteDAO();
                 ProfissionalDAO fdao = new ProfissionalDAO();
 
-                AGENDAMENTO agendamento = new AGENDAMENTO(cdao.get(CPF_Cliente), fdao.get(CPF_Profissional), data, hora, status);
+                AGENDAMENTO agendamento = new AGENDAMENTO(cdao.get(CPF_Cliente), fdao.get(CPF_Profissional),status, data, hora);
                 listaAgendamentos.add(agendamento);
             }
 
@@ -116,9 +115,9 @@ public class AgendamentoDAO extends GenericDAO {
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement.setString(1, CPF_Cliente);
-            statement.executeUpdate();
+            statement.executeQuery();
             
-            ResultSet resultSet = statement.executeQuery(sql);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 CPF_Cliente = resultSet.getString("CPF_Cliente");
                 String CPF_Profissional = resultSet.getString("CPF_Profissional");
@@ -129,7 +128,7 @@ public class AgendamentoDAO extends GenericDAO {
                 ClienteDAO cdao = new ClienteDAO();
                 ProfissionalDAO fdao = new ProfissionalDAO();
 
-                AGENDAMENTO agendamento = new AGENDAMENTO(cdao.get(CPF_Cliente), fdao.get(CPF_Profissional), data, hora, status);
+                AGENDAMENTO agendamento = new AGENDAMENTO(cdao.get(CPF_Cliente), fdao.get(CPF_Profissional),status,  data, hora);
                 listaAgendamentos.add(agendamento);
             }
 

@@ -3,9 +3,9 @@ package br.ufscar.dc.dsw.domain;
 public class CLIENTE extends USUARIO{	
 	
 	public CLIENTE(String cpf,
-				   String nome, 
-				   String senha, 
 				   String email, 
+				   String senha, 
+				   String nome, 
 				   String sexo, 
 				   String telefone, 
 				   String data_nascimento

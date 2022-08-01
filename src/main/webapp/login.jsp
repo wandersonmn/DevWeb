@@ -9,6 +9,9 @@
         <link href="${pageContext.request.contextPath}/layout.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <%
+		String contextPath = request.getContextPath().replace("/", "");
+	    %>
         <h1>Autenticação de Usuário</h1>
         <c:if test="${mensagens.existeErros}">
             <div id="erro">
@@ -24,12 +27,12 @@
             <table>
                 <tr>
                     <th>Login: </th>
-                    <td><input type="text" name="login"
+                    <td><input type="text" name="login" placeholder="Email"
                                value="${param.login}"/></td>
                 </tr>
                 <tr>
                     <th>Senha: </th>
-                    <td><input type="password" name="senha" /></td>
+                    <td><input type="password" name="senha" placeholder="Password"/></td>
                 </tr>
                 <tr>
                     <td colspan="2"> 
@@ -37,6 +40,9 @@
                     </td>
                 </tr>
             </table>
+            <h3>
+                <a href="/<%=contextPath%>/">Inicio</a>
+            </h3>
         </form>
     </body>
 </html>

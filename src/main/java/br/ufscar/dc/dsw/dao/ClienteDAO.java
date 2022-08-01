@@ -82,9 +82,9 @@ public class ClienteDAO extends GenericDAO {
     }
 
     public void update(CLIENTE cliente) {
-        String sql = "UPDATE CLIENTE SET CPF = ?, email = ?, senha = ?, "
+        String sql = "UPDATE CLIENTE SET CPF_Cliente = ?, email = ?, senha = ?, "
         		+ "nome = ?, sexo = ?, telefone = ?, data_nascimento = ?";
-        sql += "WHERE CPF = ?";
+        sql += "WHERE CPF_Cliente = ?";
 
         try {
             Connection conn = this.getConnection();
@@ -138,7 +138,7 @@ public class ClienteDAO extends GenericDAO {
     public CLIENTE get(String CPF) {
         CLIENTE cliente = null;
 
-        String sql = "SELECT * from CLIENTE u where u.CPF = ?";
+        String sql = "SELECT * from CLIENTE c,USUARIO u where CPF_Cliente = ? and c.CPF_Cliente = u.CPF";
 
         try {
             Connection conn = this.getConnection();
@@ -147,7 +147,7 @@ public class ClienteDAO extends GenericDAO {
             statement.setString(1, CPF);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                String cpf = resultSet.getString("cpf");
+                String cpf = resultSet.getString("CPF_Cliente");
                 String email = resultSet.getString("email");
                 String senha = resultSet.getString("senha");
                 String nome = resultSet.getString("nome");

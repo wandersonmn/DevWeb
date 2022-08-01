@@ -25,7 +25,7 @@ public class ProfissionalDAO extends GenericDAO {
         UsuarioDAO udao = new UsuarioDAO();
         udao.insert(profissional);
 
-        String sql = "INSERT INTO PROFISSIONAL (CPF_Profissional, area_atuacao, especialidade, qualificacoes) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO PROFISSIONAL (CPF_Profissional, area_atuacao, especialidade, qualificacoes) VALUES (?, ?, ?, ?)";
 
         try {
             Connection conn = this.getConnection();
@@ -109,6 +109,7 @@ public class ProfissionalDAO extends GenericDAO {
             statement.setString(2, profissional.getArea_atuacao());
             statement.setString(3, profissional.getEspecialidade());
             statement.setString(4, profissional.getQualificacoes());
+            statement.setString(5, profissional.getCPF());
             statement.executeUpdate();
 
             statement.close();
@@ -125,27 +126,32 @@ public class ProfissionalDAO extends GenericDAO {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            // Verifica se existe um profissional com esse CPF
+            // Verifica se existe um cliente com esse CPF
             statement.setString(1, CPF);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                resultSet.getString("cpf");
+            if (resultSet.next() == false) {
+                resultSet.close();
+                statement.close();
+                conn.close();
+                
+                return false;
+            } else {
+                resultSet.close();
+                statement.close();
+                conn.close();
+
+                return true;
             }
 
-            resultSet.close();
-            statement.close();
-            conn.close();
-
-            return true;
         } catch (SQLException e) {
-            return false;
+            throw new RuntimeException(e);
         }
     }
 
     public PROFISSIONAL get(String CPF_Profissional) {
         PROFISSIONAL profissional = null;
 
-        String sql = "SELECT * from PROFISSIONAL p inner join USUARIO u on (p.CPF_Profissional = u.CPF) p where p.CPF_Profissional = ?";
+        String sql = "SELECT * from PROFISSIONAL p inner join USUARIO u on (p.CPF_Profissional = u.CPF) where p.CPF_Profissional = ?";
 
         try {
             Connection conn = this.getConnection();

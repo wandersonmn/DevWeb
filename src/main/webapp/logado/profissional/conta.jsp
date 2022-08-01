@@ -13,7 +13,7 @@
 		String contextPath = request.getContextPath().replace("/", "");
 	    %>
         <div align="center">
-            <h1>Painel do Cliente</h1>
+            <h1>Painel do Profissional</h1>
             <h3>
                 <a href="/<%=contextPath%>/">Inicio</a>
             </h3>
@@ -24,18 +24,15 @@
 
         <div align="center">
             <table border="1">
-                <caption>Consultas agendadas</caption>
+                <caption>consultas</caption>
                 <tr>
-                    <th>Profissional</th>
-                    <th>Especialidade</th>
+                    <th>Paciente</th>
                     <th>Data</th>
                     <th>Hora</th>
-                    
                 </tr>
                 <c:forEach var="agenda" items="${requestScope.listaAgendamentos}">
                     <tr>
-                        <td>${agenda.getProfissional().getNome()}</td>
-                        <td>${agenda.getProfissional().getEspecialidade()}</td>
+                        <td>${agenda.getCliente().getNome()}</td>
                         <td>${agenda.getData()}</td>
                         <td>${agenda.getHora()}</td>
                     </tr>

@@ -14,7 +14,7 @@ public class PROFISSIONAL extends USUARIO{
     }
 	
 	public PROFISSIONAL(USUARIO u, String area_atuacao, String especialidade, String qualificacoes) {
-		super(u.getCPF(),u.getNome(), u.getSenha(), u.getEmail(), u.getSexo(),u.getTelefone(), u.getData_nascimento());
+		super(u.getCPF(),u.getEmail() , u.getSenha(), u.getNome(), u.getSexo(),u.getTelefone(), u.getData_nascimento());
 		this.area_atuacao = area_atuacao;
         this.especialidade = especialidade;
         this.qualificacoes = qualificacoes; 

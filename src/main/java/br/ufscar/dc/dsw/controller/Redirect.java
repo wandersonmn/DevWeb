@@ -16,8 +16,8 @@ import br.ufscar.dc.dsw.domain.ADMIN;
 import br.ufscar.dc.dsw.domain.PROFISSIONAL;
 import br.ufscar.dc.dsw.util.Erro;
 
-@WebServlet(urlPatterns = "/admin/*")
-public class AdminController extends HttpServlet {
+@WebServlet(urlPatterns = "/redirect/*")
+public class Redirect extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,24 +28,24 @@ public class AdminController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("== [LOG]: AdminController");
+		System.out.println("== [LOG]: RedirectController");
     	
     	USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
     	Erro erros = new Erro();
 		UsuarioDAO dao = new UsuarioDAO();
     	
     	if (usuario == null) {
-    		RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
-			dispatcher.forward(request, response);
+    		response.sendRedirect("login");
     	} else if (Papel.Admin == dao.getRole(usuario)) {
-    		RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/conta.jsp");
-            dispatcher.forward(request, response);
-    	} else {
-    		erros.add("Acesso não autorizado!");
-    		erros.add("Apenas Papel [ADMIN] tem acesso a essa página");
+    		response.sendRedirect("admin/");
+    	} else if (Papel.Profissional == dao.getRole(usuario)) {
+    		response.sendRedirect("profissional/");
+    	} else if (Papel.Cliente == dao.getRole(usuario)) {
+    		response.sendRedirect("cliente/");
+    	}  else {
+    		erros.add("Usuário não possui papel!");
     		request.setAttribute("mensagens", erros);
-    		RequestDispatcher rd = request.getRequestDispatcher("/noAuth.jsp");
-    		rd.forward(request, response);
+            response.sendRedirect("/noAuth.jsp");
     	}
     }
 }
