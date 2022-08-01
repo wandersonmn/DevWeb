@@ -15,7 +15,7 @@
         <div align="center">
             <h1>Painel do Profissional</h1>
             <h3>
-                <a href="/<%=contextPath%>/login">Minha Conta</a>
+                <a href="/<%=contextPath%>/login">Inicio</a>
             </h3>
         </div>
 
@@ -23,17 +23,15 @@
             <table border="1">
                 <caption>consultas</caption>
                 <tr>
-                    <th>Nome</th>
-                    <th>Área de Atuação</th>
-                    <th>Especialidade</th>
-                    <th>Ações</th>
+                    <th>Paciente</th>
+                    <th>Data</th>
+                    <th>Hora</th>
                 </tr>
-                <c:forEach var="profissional" items="${requestScope.listaProfissionais}">
+                <c:forEach var="agenda" items="${requestScope.listaAgendamentos}">
                     <tr>
-                        <td>${profissional.getNome()}</td>
-                        <td>${profissional.getArea_atuacao()}</td>
-                        <td>${profissional.getEspecialidade()}</td>
-                        <td><a href="/<%= contextPath%>/profissional/agendar?id=${profissional.getCPF()}">Agendar</a></a></td>
+                        <td>${agenda.getCliente().getNome()}</td>
+                        <td>${agenda.getData()}</td>
+                        <td>${agenda.getHora()}</td>
                     </tr>
                 </c:forEach>
             </table>

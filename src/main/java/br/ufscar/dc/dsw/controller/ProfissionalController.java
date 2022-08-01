@@ -1,6 +1,7 @@
 package br.ufscar.dc.dsw.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,10 +9,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import br.ufscar.dc.dsw.dao.AgendamentoDAO;
 import br.ufscar.dc.dsw.dao.UsuarioDAO;
 import br.ufscar.dc.dsw.dao.UsuarioDAO.Papel;
-
-import br.ufscar.dc.dsw.domain.PROFISSIONAL;
+import br.ufscar.dc.dsw.domain.AGENDAMENTO;
+import br.ufscar.dc.dsw.domain.*;
 import br.ufscar.dc.dsw.domain.USUARIO;
 import br.ufscar.dc.dsw.util.Erro;
 
@@ -19,6 +22,14 @@ import br.ufscar.dc.dsw.util.Erro;
 public class ProfissionalController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+    
+    
+    private AgendamentoDAO Agdao;
+    
+    @Override
+    public void init() {
+        Agdao = new AgendamentoDAO();
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,8 +49,7 @@ public class ProfissionalController extends HttpServlet {
     		RequestDispatcher dispatcher = request.getRequestDispatcher("/login/");
 			dispatcher.forward(request, response);
     	} else if (Papel.Profissional == dao.getRole(usuario)) {
-    		RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/profissional/conta.jsp");
-            dispatcher.forward(request, response);
+    		lista(request, response);
     	} else {
     		erros.add("Acesso não autorizado!");
     		erros.add("Apenas Papel [PRO] tem acesso a essa página");
@@ -47,5 +57,14 @@ public class ProfissionalController extends HttpServlet {
     		RequestDispatcher rd = request.getRequestDispatcher("/noAuth.jsp");
     		rd.forward(request, response);
     	}    	
+    }
+    	private void lista(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    	USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
+    	String cpf = usuario.getCPF();
+        List<AGENDAMENTO> listaAgendamentos = Agdao.getAllProfissional(cpf);
+        request.setAttribute("listaAgendamentos", listaAgendamentos);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/profissional/conta.jsp");
+        dispatcher.forward(request, response);
     }
 }

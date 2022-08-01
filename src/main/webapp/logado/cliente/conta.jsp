@@ -15,7 +15,7 @@
         <div align="center">
             <h1>Painel do Cliente</h1>
             <h3>
-                <a href="/<%=contextPath%>/login">Minha Conta</a>
+                <a href="/<%=contextPath%>/login">Inicio</a>
             </h3>
         </div>
 
