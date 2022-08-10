@@ -66,6 +66,9 @@ public class ClienteController extends HttpServlet {
                     case "/agendarHorario":
                         agendarHorario(request, response);
                         break;
+                    case "/cancelarHorario":
+                        cancelarHorario(request, response);
+                        break;
                     default:
                         lista(request, response);
                         break;
@@ -114,6 +117,21 @@ public class ClienteController extends HttpServlet {
         PROFISSIONAL profissional = pDao.get(cpf_profissional);
         AGENDAMENTO agendamento = new AGENDAMENTO(cliente, profissional, data, hora);
         Agdao.agendar(agendamento);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/cliente");
+        dispatcher.forward(request, response);
+    }
+
+    private void cancelarHorario(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+        String cpf_profissional = (String)request.getParameter("pro");
+        String data = (String)request.getParameter("data");
+        String hora = (String)request.getParameter("hora");
+        // Inserindo consulta no BD
+        USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
+        CLIENTE cliente = cDao.get(usuario.getCPF());
+        PROFISSIONAL profissional = pDao.get(cpf_profissional);
+        AGENDAMENTO agendamento = new AGENDAMENTO(cliente, profissional, data, hora);
+        Agdao.cancelar(agendamento);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/cliente");
         dispatcher.forward(request, response);
     }

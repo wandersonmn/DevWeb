@@ -57,6 +57,28 @@ public class AgendamentoDAO extends GenericDAO {
         }
     }
 
+    public void cancelar(AGENDAMENTO agendamento){
+        // Setar como vazio o CPF_Cliente de um agendamento específico
+        String sql = "UPDATE AGENDAMENTO SET CPF_Cliente = 'VAZIO' WHERE CPF_Cliente = ? AND CPF_Profissional = ? AND data = ? AND hora = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, agendamento.getCliente().getCPF());
+            statement.setString(2, agendamento.getProfissional().getCPF());
+            statement.setString(3, agendamento.getData());
+            statement.setString(4, agendamento.getHora());
+       
+            statement.executeUpdate();
+
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     // Por profissional
     public List<AGENDAMENTO> getDisp(String CPF_Profissional) {
         List<AGENDAMENTO> listaAgendamentos = new ArrayList<>();
