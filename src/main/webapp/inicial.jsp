@@ -15,7 +15,9 @@
         <div align="center">
             <h1>Sistema de Agendamento</h1>
             <h3>
-                <a href="/<%=contextPath%>/redirect">Minha Conta</a>
+                <form name="submitForm" method="POST" action="/<%=contextPath%>/redirect">
+                    <input type="submit" name="btn" value="Minha Conta">
+                </form>
             </h3>
         </div>
 
@@ -33,7 +35,13 @@
                         <td>${profissional.getNome()}</td>
                         <td>${profissional.getArea_atuacao()}</td>
                         <td>${profissional.getEspecialidade()}</td>
-                        <td><a href="/<%= contextPath%>/cliente/agendar?cpf=${profissional.getCPF()}&nome=${profissional.getNome()}">Agendar</a></a></td>
+                        <td>
+                            <form name="submitForm" method="POST" action="/<%= contextPath%>/cliente/agendar">
+                                <input type="hidden" name="nome" value ="${profissional.getNome()}">
+                                <input type="hidden" name="cpf" value ="${profissional.getCPF()}">
+                                <input type="submit" name="btn" value="Agendar">
+                            </form>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>
