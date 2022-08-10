@@ -2,7 +2,6 @@ package br.ufscar.dc.dsw.controller;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,8 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import br.ufscar.dc.dsw.domain.USUARIO;
 import br.ufscar.dc.dsw.dao.UsuarioDAO;
 import br.ufscar.dc.dsw.dao.UsuarioDAO.Papel;
-import br.ufscar.dc.dsw.domain.ADMIN;
-import br.ufscar.dc.dsw.domain.PROFISSIONAL;
 import br.ufscar.dc.dsw.util.Erro;
 
 @WebServlet(urlPatterns = "/redirect/*")
