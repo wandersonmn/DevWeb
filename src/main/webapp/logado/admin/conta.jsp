@@ -11,32 +11,46 @@
     <body>
         <%
 		String contextPath = request.getContextPath().replace("/", "");
+		
 	    %>
         <div align="center">
             <h1>Painel do Adm</h1>
             <h3>
                 <a href="/<%=contextPath%>/">Inicio</a>
-            </h3>
-            <h3>
-                <a href="/<%=contextPath%>/login">Logout</a>
+                <a href="/<%=contextPath%>/">	Novo Usuario</a>
+                <a href="/<%=contextPath%>/login">	Logout</a>
             </h3>
         </div>
-
+        <div align="center">
+        <form action="" id="tipousuario" method="POST">
+		<select id="tipousuario" name="tipousuario" onchange="this.form.submit()">
+					<option value="${param.tipousuario}"
+    					<c:if test="${param.tipousuario eq param.tipousersel}">selected="selected"</c:if>
+   					 	>
+   					 	${param.tipousuario}
+					</option>
+                	<option value="Clientes" name="Clientes">Clientes</option>
+                	<option value="Profissionais" name="Profissionais">Profissionais</option>          	
+                </select>
+        </form>
+        </div>
+        
         <div align="center">
             <table border="1">
-                <caption>Profissionais Disponíveis</caption>
+                <caption>Usuários cadastrados</caption>
                 <tr>
                     <th>Nome</th>
-                    <th>Área de Atuação</th>
-                    <th>Especialidade</th>
-                    <th>Ações</th>
+                    <th>E-mail</th>
+                    <th>Editar</th>
+                    <th>Remover</th>
+                    
                 </tr>
-                <c:forEach var="profissional" items="${requestScope.listaProfissionais}">
+                <c:forEach var="usuarios" items="${requestScope.listaUsuarios}">
                     <tr>
-                        <td>${profissional.getNome()}</td>
-                        <td>${profissional.getArea_atuacao()}</td>
-                        <td>${profissional.getEspecialidade()}</td>
-                        <td><a href="/<%= contextPath%>/profissional/agendar?id=${profissional.getCPF()}">Agendar</a></a></td>
+                        <td>${usuarios.getNome()}</td>
+                        <td>${usuarios.getEmail()}</td>
+                        <td><a href="/<%= contextPath%>/admin/editar?id=${usuarios.getCPF()}">Editar</a></a></td>
+                        <td><a href="/<%= contextPath%>/admin/deletar?id=${usuarios.getCPF()}">Deletar</a></a></td>
                     </tr>
                 </c:forEach>
             </table>
