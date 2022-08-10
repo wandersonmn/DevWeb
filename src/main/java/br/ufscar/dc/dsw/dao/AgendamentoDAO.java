@@ -12,9 +12,32 @@ import br.ufscar.dc.dsw.domain.AGENDAMENTO;
 
 public class AgendamentoDAO extends GenericDAO {
 
+    // NOTA! Insert insere apenas agendamentos vazios, deve ser usado pelo profissional por exemplo
+    // Use agendar para atualizar um agendamento existente para utilizar o CPF do cliente
     public void insert(AGENDAMENTO agendamento) {
 
-        String sql = "INSERT INTO AGENDAMENTO (CPF_Cliente, CPF_Profissional, data, hora) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO AGENDAMENTO (CPF_Cliente, CPF_Profissional, data, hora) VALUES ('VAZIO', ?, ?, ?)";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, agendamento.getProfissional().getCPF());
+            statement.setString(2, agendamento.getData());
+            statement.setString(3, agendamento.getHora());
+       
+            statement.executeUpdate();
+
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void agendar(AGENDAMENTO agendamento){
+        // Colocar o CPF_Cliente de agendamento em agendamento com CPF_Cliente = "VAZIO"
+        String sql = "UPDATE AGENDAMENTO SET CPF_Cliente = ? WHERE CPF_Cliente = 'VAZIO' AND CPF_Profissional = ? AND data = ? AND hora = ?";
 
         try {
             Connection conn = this.getConnection();

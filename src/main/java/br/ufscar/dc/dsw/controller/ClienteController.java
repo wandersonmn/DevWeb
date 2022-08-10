@@ -105,16 +105,16 @@ public class ClienteController extends HttpServlet {
 
     private void agendarHorario(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    String cpf_profissional = (String)request.getParameter("pro");
-    String data = (String)request.getParameter("data");
-    String hora = (String)request.getParameter("hora");
-    // Inserindo consulta no BD
-    USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
-    CLIENTE cliente = cDao.get(usuario.getCPF());
-    PROFISSIONAL profissional = pDao.get(cpf_profissional);
-    AGENDAMENTO agendamento = new AGENDAMENTO(cliente, profissional, data, hora);
-    Agdao.insert(agendamento);
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/cliente.jsp");
-    dispatcher.forward(request, response);
+        String cpf_profissional = (String)request.getParameter("pro");
+        String data = (String)request.getParameter("data");
+        String hora = (String)request.getParameter("hora");
+        // Inserindo consulta no BD
+        USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
+        CLIENTE cliente = cDao.get(usuario.getCPF());
+        PROFISSIONAL profissional = pDao.get(cpf_profissional);
+        AGENDAMENTO agendamento = new AGENDAMENTO(cliente, profissional, data, hora);
+        Agdao.agendar(agendamento);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/cliente");
+        dispatcher.forward(request, response);
     }
 }

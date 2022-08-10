@@ -35,7 +35,19 @@
                     <tr>
                         <td><c:out value="${agenda.getData()}"/></td>
                         <td><c:out value="${agenda.getHora()}"/></td>
-                        <td><a href="/<%= contextPath%>/cliente/agendarHorario?pro=${agenda.getProfissional().getCPF()}&data=${agenda.getData()}&hora=${agenda.getHora()}}">Selecionar Horário</a></a></td>
+                        <td>
+                            <form name="submitForm" method="POST" action="/<%= contextPath%>/cliente/agendarHorario">
+                                <input type="hidden" name="pro" value="${agenda.getProfissional().getCPF()}"">
+                                <input type="hidden" name="data" value="${agenda.getData()}"">
+                                <input type="hidden" name="hora" value="${agenda.getHora()}">
+                                <input type="submit" name="btn" value="Agendar">
+                            </form>
+
+                            <script>
+                                
+                            </script>
+                        </td>
+                        <!-- <td><a href="/<%= contextPath%>/cliente/agendarHorario?pro=${agenda.getProfissional().getCPF()}&data=${agenda.getData()}&hora=${agenda.getHora()}}">Selecionar Horário</a></a></td> -->
                     </tr>
                 </c:forEach>
             </table>

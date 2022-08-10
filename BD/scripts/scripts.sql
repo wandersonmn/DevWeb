@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `AGENDAMENTO` (
   `data` DATE NOT NULL, -- range 0001-01-01 to 9999-12-31
   `hora` TIME NOT NULL, -- range 00:00:00.0000000 to 23:59:59.9999999
   `status` VARCHAR(10) NOT NULL DEFAULT 'ativo',
-  PRIMARY KEY (`CPF_Cliente`,`CPF_Profissional`,`data`, `hora`),
+  PRIMARY KEY (`CPF_Profissional`,`data`, `hora`),
   CONSTRAINT `fk_CPF_Cliente_Agendamento`
     FOREIGN KEY (`CPF_Cliente`)
     REFERENCES `CLIENTE` (`CPF_Cliente`)
