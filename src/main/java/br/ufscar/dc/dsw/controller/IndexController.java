@@ -1,15 +1,10 @@
 package br.ufscar.dc.dsw.controller;
 
-import br.ufscar.dc.dsw.domain.CLIENTE;
 import br.ufscar.dc.dsw.dao.ProfissionalDAO;
 import br.ufscar.dc.dsw.domain.PROFISSIONAL;
-import br.ufscar.dc.dsw.dao.AgendamentoDAO;
-import br.ufscar.dc.dsw.domain.AGENDAMENTO;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,12 +18,10 @@ public class IndexController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
     private ProfissionalDAO pDao;
-    private AgendamentoDAO aDao;
 
     @Override
     public void init() {
         pDao = new ProfissionalDAO();
-        aDao = new AgendamentoDAO();
     }
 
     @Override
@@ -48,19 +41,6 @@ public class IndexController extends HttpServlet {
             action = "";
         }
 
-        // try {
-        //     switch (action) {
-		// 		// ! Não sei se é o ideal colocar o agendamento e a conta aqui
-        //         case "/agendar":
-        //             agendar(request, response); // TODO: mudar
-        //             break;
-        //         default:
-        //             lista(request, response);
-        //     } catch (RuntimeException | IOException | ServletException e) {
-        //         throw new ServletException(e);
-        //     }
-        
-        // }
         try {
             switch (action) {
                 default:
