@@ -129,6 +129,7 @@ public class ClienteController extends HttpServlet {
         // Inserindo consulta no BD
         USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
         CLIENTE cliente = cDao.get(usuario.getCPF());
+        System.out.println("ClienteController - Buscando profissional de cpf " + cpf_profissional);
         PROFISSIONAL profissional = pDao.get(cpf_profissional);
         AGENDAMENTO agendamento = new AGENDAMENTO(cliente, profissional, data, hora);
         Agdao.cancelar(agendamento);

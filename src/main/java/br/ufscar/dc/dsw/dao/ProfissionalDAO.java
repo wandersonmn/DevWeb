@@ -149,15 +149,14 @@ public class ProfissionalDAO extends GenericDAO {
     }
 
     public PROFISSIONAL get(String CPF_Profissional) {
+        System.out.println("ProfissionalDAO - Buscando profissional de cpf " + CPF_Profissional);
         PROFISSIONAL profissional = null;
-
         String sql = "SELECT * from PROFISSIONAL p inner join USUARIO u on (p.CPF_Profissional = u.CPF) where p.CPF_Profissional = ?";
-
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
-
             statement.setString(1, CPF_Profissional);
+            System.out.println("ProfissionalDAO - Executando Query");
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 
@@ -171,11 +170,13 @@ public class ProfissionalDAO extends GenericDAO {
 
                 profissional = new PROFISSIONAL(usuario, area_atuacao, especialidade, qualificacoes);
             }
+            System.out.println("ProfissionalDAO - Query Executado, cpf obtido = " + profissional.getCPF());
 
             resultSet.close();
             statement.close();
             conn.close();
         } catch (SQLException e) {
+            System.out.println("ProfissionalDAO - Erro na execução ");
             throw new RuntimeException(e);
         }
         return profissional;

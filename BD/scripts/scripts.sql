@@ -117,8 +117,8 @@ INSERT INTO USUARIO (`CPF`,`email`,`senha`,`nome`,`sexo`,`telefone`,`data_nascim
 VALUES ('CPFEHSTRING','paulo@admin.com','adm','Paulo Administrador da Silva','M','5511987676545','2002-02-02');
 
 -- 3 profissionais
-INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('98765432100','mecanico','fuselagem','/src/qualy/0243.pdf');
-INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('42069621000','medico','computadores','todas');
+INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('98765432100','Mecânico','Direção Hidráulica','/src/qualy/0243.pdf');
+INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('42069621000','Médico','Cardiologia','todas');
 INSERT INTO ADM (`CPF_Adm`) VALUES ('CPFEHSTRING');
 
 -- 1 cliente

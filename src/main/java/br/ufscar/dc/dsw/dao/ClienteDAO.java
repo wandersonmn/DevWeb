@@ -139,12 +139,11 @@ public class ClienteDAO extends GenericDAO {
         CLIENTE cliente = null;
 
         String sql = "SELECT * from CLIENTE c,USUARIO u where CPF_Cliente = ? and c.CPF_Cliente = u.CPF";
-
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
-
             statement.setString(1, CPF);
+            System.out.println("O CPF é " + CPF);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 String cpf = resultSet.getString("CPF_Cliente");
@@ -162,6 +161,7 @@ public class ClienteDAO extends GenericDAO {
             statement.close();
             conn.close();
         } catch (SQLException e) {
+            System.out.println("Morri");
             throw new RuntimeException(e);
         }
         return cliente;

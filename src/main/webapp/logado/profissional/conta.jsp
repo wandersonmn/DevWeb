@@ -24,17 +24,57 @@
 
         <div align="center">
             <table border="1">
-                <caption>consultas</caption>
+                <caption>Consultas Agendadas</caption>
                 <tr>
                     <th>Paciente</th>
                     <th>Data</th>
                     <th>Hora</th>
+                    <th>Ações</th>
                 </tr>
                 <c:forEach var="agenda" items="${requestScope.listaAgendamentos}">
                     <tr>
                         <td>${agenda.getCliente().getNome()}</td>
                         <td>${agenda.getData()}</td>
                         <td>${agenda.getHora()}</td>
+                        <td>
+                            <form name="submitForm" method="POST" action="/<%= contextPath%>/profissional/cancelarHorario">
+                                <input type="hidden" name="data" value="${agenda.getData()}"">
+                                <input type="hidden" name="hora" value="${agenda.getHora()}">
+                                <input type="submit" name="btn" value="Cancelar">
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
+        <br><br>
+        <div align="center">
+            <form name="submitForm" method="POST" action="/<%= contextPath%>/profissional/novoHorario">
+                <input type="date" id="data" name="data" size="20" required value="${agenda.data}" />
+                <input type="time" id="hora" name="hora" size="20" required value="${agenda.hora}" />
+                <input type="submit" name="btn" value="Adicionar Horário">
+            </form>
+        </div>
+        <br>
+        <div align="center">
+            <table border="1">
+                <caption>Horários Livres Cadastrados</caption>
+                <tr>
+                    <th>Data</th>
+                    <th>Hora</th>
+                    <th>Ações</th>
+                </tr>
+                <c:forEach var="agenda" items="${requestScope.listaLivres}">
+                    <tr>
+                        <td>${agenda.getData()}</td>
+                        <td>${agenda.getHora()}</td>
+                        <td>
+                            <form name="submitForm" method="POST" action="/<%= contextPath%>/profissional/removerHorario">
+                                <input type="hidden" name="data" value="${agenda.getData()}"">
+                                <input type="hidden" name="hora" value="${agenda.getHora()}">
+                                <input type="submit" name="btn" value="Remover Horário">
+                            </form>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>

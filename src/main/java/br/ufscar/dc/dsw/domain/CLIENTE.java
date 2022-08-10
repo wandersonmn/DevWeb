@@ -2,6 +2,10 @@ package br.ufscar.dc.dsw.domain;
 
 public class CLIENTE extends USUARIO{	
 	
+	public CLIENTE(){
+		super("VAZIO", "USUARIO_VAZIO", "USUARIO_VAZIO", "USUARIO_VAZIO", "M", "USUARIO_VAZIO", "USUARIO_VAZIO");
+	}
+
 	public CLIENTE(String cpf,
 				   String email, 
 				   String senha, 

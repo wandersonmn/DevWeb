@@ -22,6 +22,7 @@ public class AgendamentoDAO extends GenericDAO {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
+            System.out.println(agendamento.getProfissional().getCPF() + " " + agendamento.getData() + " " + agendamento.getHora());
             statement.setString(1, agendamento.getProfissional().getCPF());
             statement.setString(2, agendamento.getData());
             statement.setString(3, agendamento.getHora());
@@ -59,16 +60,17 @@ public class AgendamentoDAO extends GenericDAO {
 
     public void cancelar(AGENDAMENTO agendamento){
         // Setar como vazio o CPF_Cliente de um agendamento específico
-        String sql = "UPDATE AGENDAMENTO SET CPF_Cliente = 'VAZIO' WHERE CPF_Cliente = ? AND CPF_Profissional = ? AND data = ? AND hora = ?";
-
+        String sql = "UPDATE AGENDAMENTO SET CPF_Cliente = 'VAZIO' WHERE CPF_Profissional = ? AND data = ? AND hora = ?";
+        System.out.println("aDAO: CPF_Profissional = " + agendamento.getProfissional().getCPF());
+        System.out.println("aDAO: data = " + agendamento.getData());
+        System.out.println("aDAO: hora = " + agendamento.getHora());
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setString(1, agendamento.getCliente().getCPF());
-            statement.setString(2, agendamento.getProfissional().getCPF());
-            statement.setString(3, agendamento.getData());
-            statement.setString(4, agendamento.getHora());
+            statement.setString(1, agendamento.getProfissional().getCPF());
+            statement.setString(2, agendamento.getData());
+            statement.setString(3, agendamento.getHora());
        
             statement.executeUpdate();
 
@@ -258,30 +260,15 @@ public class AgendamentoDAO extends GenericDAO {
     }
 
     public void deleteProfissional(AGENDAMENTO agendamento) {
-        String sql = "DELETE FROM AGENDAMENTO where CPF_Profissional = ?";
+        String sql = "DELETE FROM AGENDAMENTO where CPF_Profissional = ? AND data = ? AND hora = ?";
 
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement.setString(1, agendamento.getProfissional().getCPF());
-            statement.executeUpdate();
-
-            statement.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void deleteCliente(AGENDAMENTO agendamento) {
-        String sql = "DELETE FROM AGENDAMENTO where CPF_Cliente = ?";
-
-        try {
-            Connection conn = this.getConnection();
-            PreparedStatement statement = conn.prepareStatement(sql);
-
-            statement.setString(1, agendamento.getCliente().getCPF());
+            statement.setString(2, agendamento.getData());
+            statement.setString(3, agendamento.getHora());
             statement.executeUpdate();
 
             statement.close();
