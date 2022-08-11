@@ -7,8 +7,8 @@ Sistema para agendamento de consultas online com profissionais
 Aqui estão todos os requisitos do sistema
 
 1. [ ] CRUD CLIENTES (APENAS ADM)
-	[ ]	CREATE
-	[ ]	READ
+1.1		[ ]	CREATE
+1.2		[ ]	READ
 	[ ]	UPDATE
 	[ ] DELETE
 
