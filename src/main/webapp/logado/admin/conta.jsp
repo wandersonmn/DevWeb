@@ -41,16 +41,18 @@
                 <tr>
                     <th>Nome</th>
                     <th>E-mail</th>
-                    <th>Editar</th>
-                    <th>Remover</th>
+                    <th>Ações</th>
                     
                 </tr>
                 <c:forEach var="usuarios" items="${requestScope.listaUsuarios}">
                     <tr>
                         <td>${usuarios.getNome()}</td>
                         <td>${usuarios.getEmail()}</td>
-                        <td><a href="/<%= contextPath%>/admin/editar?id=${usuarios.getCPF()}">Editar</a></a></td>
-                        <td><a href="/<%= contextPath%>/admin/deletar?id=${usuarios.getCPF()}">Deletar</a></a></td>
+                        <td><a href="/<%= contextPath%>/admin/edicao?cpf=${usuarios.getCPF()}">Editar</a>
+						&nbsp;&nbsp;&nbsp;&nbsp; <a
+						href="/<%= contextPath%>/admin/remocao?cpf=${usuarios.getCPF()}"
+						onclick="return confirm('Tem certeza de que deseja excluir este usuário?');">
+							Remover </a></td>
                     </tr>
                 </c:forEach>
             </table>
