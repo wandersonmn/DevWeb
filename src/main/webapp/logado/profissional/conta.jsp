@@ -92,6 +92,6 @@
                 </c:forEach>
             </table>
         </div>
-    <script src="scripts.js" async defer></script>
+    <script src="${pageContext.request.contextPath}/scripts.js" async defer></script>
     </body>
 </html>
