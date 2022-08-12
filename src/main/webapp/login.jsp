@@ -27,12 +27,12 @@
             <table>
                 <tr>
                     <th>Login: </th>
-                    <td><input type="text" name="login" placeholder="Email"
+                    <td><input type="email" name="login" placeholder="e-mail"
                                value="${param.login}"/></td>
                 </tr>
                 <tr>
                     <th>Senha: </th>
-                    <td><input type="password" name="senha" placeholder="Password"/></td>
+                    <td><input type="password" name="senha" placeholder="password"/></td>
                 </tr>
                 <tr>
                     <td colspan="2"> 

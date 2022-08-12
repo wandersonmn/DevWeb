@@ -51,7 +51,20 @@
         <div align="center">
             <form name="submitForm" method="POST" action="/<%= contextPath%>/profissional/novoHorario">
                 <input type="date" id="data" name="data" size="20" required value="${agenda.data}" />
-                <input type="time" id="hora" name="hora" size="20" required value="${agenda.hora}" />
+                <input type="time" id="hora" list="horas" name="hora" size="20" required value="${agenda.hora}" />
+                <datalist id="horas">
+	                <option>09:00</option>
+	                <option>10:00</option>
+	                <option>11:00</option>
+	                <option>12:00</option>
+	                <option>13:00</option>
+	                <option>14:00</option>
+	                <option>15:00</option>
+	                <option>16:00</option>
+	                <option>17:00</option>
+	                <option>18:00</option>
+                </datalist>
+                
                 <input type="submit" name="btn" value="Adicionar Horário">
             </form>
         </div>
@@ -79,5 +92,6 @@
                 </c:forEach>
             </table>
         </div>
+    <script src="scripts.js" async defer></script>
     </body>
 </html>
