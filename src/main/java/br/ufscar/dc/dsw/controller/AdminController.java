@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.ufscar.dc.dsw.domain.USUARIO;
-import br.ufscar.dc.dsw.dao.UsuarioDAO;
 import br.ufscar.dc.dsw.dao.*;
 import br.ufscar.dc.dsw.dao.UsuarioDAO.Papel;
 import br.ufscar.dc.dsw.domain.*;
@@ -65,10 +63,10 @@ public class AdminController extends HttpServlet {
 
             try {
                 switch (action) {
-                    case "/editar":
-                        lista(request, response); // TODO: mudar
+                    case "/edicao":
+                    	apresentaFormEdicao(request, response);
                         break;
-                    case "/deletar":
+                    case "/remocao":
                     	lista(request, response);
                     	break;
                     default:
@@ -110,17 +108,69 @@ public class AdminController extends HttpServlet {
         else  {
         	request.setAttribute("listaUsuarios", listaProfissionais);
         }
-        
-     	
-        
-        
-        //request.setAttribute("listaUsuarios", listaClientes);
-        /*
-        request.setAttribute("listaUsuarios", listaUsuarios);
-        request.setAttribute("listaClientes", listaClientes);
-        request.setAttribute("listaProfissionais", listaProfissionais);*/
        
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/conta.jsp");
         dispatcher.forward(request, response);
     }
+    /*
+    private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setAttribute("editoras", getEditoras());
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/livro/formulario.jsp");
+        dispatcher.forward(request, response);
+    }
+	*/
+    private void apresentaFormEdicao(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String cpf = request.getParameter("cpf");
+        CLIENTE usuarios = cldao.get(cpf);
+        request.setAttribute("usuarios", usuarios);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/formulario.jsp");
+        dispatcher.forward(request, response);
+    }
+    /*
+    private void insere(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        
+        String titulo = request.getParameter("titulo");
+        String autor = request.getParameter("autor");
+        Integer ano = Integer.parseInt(request.getParameter("ano"));
+        Float preco = Float.parseFloat(request.getParameter("preco"));
+        
+        Long editoraID = Long.parseLong(request.getParameter("editora"));
+        Editora editora = new EditoraDAO().get(editoraID);
+        
+        Livro livro = new Livro(titulo, autor, ano, preco, editora);
+        dao.insert(livro);
+        response.sendRedirect("lista");
+    }
+
+    private void atualize(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        request.setCharacterEncoding("UTF-8");
+        Long id = Long.parseLong(request.getParameter("id"));
+        String titulo = request.getParameter("titulo");
+        String autor = request.getParameter("autor");
+        Integer ano = Integer.parseInt(request.getParameter("ano"));
+        Float preco = Float.parseFloat(request.getParameter("preco"));
+        
+        Long editoraID = Long.parseLong(request.getParameter("editora"));
+        Editora editora = new EditoraDAO().get(editoraID);
+        
+        Livro livro = new Livro(id, titulo, autor, ano, preco, editora);
+        dao.update(livro);
+        response.sendRedirect("lista");
+    }
+
+    private void remove(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        Long id = Long.parseLong(request.getParameter("id"));
+
+        Livro livro = new Livro(id);
+        dao.delete(livro);
+        response.sendRedirect("lista");
+    }
+    */
 }
