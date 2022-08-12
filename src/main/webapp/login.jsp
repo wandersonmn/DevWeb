@@ -6,13 +6,34 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Autenticação de Usuário</title>
-        <link href="${pageContext.request.contextPath}/layout.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/layout.css"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/styles.css"/>
     </head>
     <body>
         <%
 		String contextPath = request.getContextPath().replace("/", "");
 	    %>
-        <h1>Autenticação de Usuário</h1>
+        <header>
+	      <div class="container">
+	        <h3 style="color: white;">
+	          Profissionais Online
+	        </h3>
+	
+	        <div class="menu-section">
+	          <nav>
+	            <ul>
+	              <li />
+	              <li />
+	              <li />
+	              <li>
+	                <a href="/<%=contextPath%>/">Inicio</a>
+	              </li>
+	            </ul>
+	          </nav>
+	        </div>
+	      </div>
+    	</header>
+    	
         <c:if test="${mensagens.existeErros}">
             <div id="erro">
                 <ul>
@@ -23,26 +44,16 @@
             </div>
         </c:if>
         <!-- Passa o controle para LoginController.java (Que tem urlpatterns = /login) após o submit -->
-        <form method="post" action="login">
-            <table>
-                <tr>
-                    <th>Login: </th>
-                    <td><input type="email" name="login" placeholder="e-mail"
-                               value="${param.login}"/></td>
-                </tr>
-                <tr>
-                    <th>Senha: </th>
-                    <td><input type="password" name="senha" placeholder="password"/></td>
-                </tr>
-                <tr>
-                    <td colspan="2"> 
-                        <input type="submit" name="bOK" value="Entrar"/>
-                    </td>
-                </tr>
-            </table>
-            <h3>
-                <a href="/<%=contextPath%>/">Inicio</a>
-            </h3>
-        </form>
+        <div class="login-page">
+		  <div class="form">
+		    <h2>Login</h2>
+		    <form method="post" action="login" class="login-form">
+		      <input type="email" placeholder="email" name="login" value="${param.login}"/>
+		      <input type="password" name="senha" placeholder="password"/>
+		      <button type="submit" name="bOK" value="Entrar">Entrar</button>
+		    </form>
+		  </div>
+		</div>
+		
     </body>
 </html>

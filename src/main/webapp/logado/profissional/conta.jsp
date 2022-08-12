@@ -50,8 +50,8 @@
         <br><br>
         <div align="center">
             <form name="submitForm" method="POST" action="/<%= contextPath%>/profissional/novoHorario">
-                <input type="date" id="data" name="data" size="20" required value="${agenda.data}" />
-                <input type="time" id="hora" list="horas" name="hora" size="20" required value="${agenda.hora}" />
+                <input class="input-control" type="date" id="data" name="data" size="20" required value="${agenda.data}" />
+                <input class="input-control" type="time" id="hora" list="horas" name="hora" size="20" required value="${agenda.hora}" />
                 <datalist id="horas">
 	                <option>09:00</option>
 	                <option>10:00</option>
@@ -83,8 +83,8 @@
                         <td>${agenda.getHora()}</td>
                         <td>
                             <form name="submitForm" method="POST" action="/<%= contextPath%>/profissional/removerHorario">
-                                <input type="hidden" name="data" value="${agenda.getData()}"">
-                                <input type="hidden" name="hora" value="${agenda.getHora()}">
+                                <input class="input-control" type="hidden" name="data" value="${agenda.getData()}"">
+                                <input class="input-control" type="hidden" name="hora" value="${agenda.getHora()}">
                                 <input type="submit" name="btn" value="Remover Horário">
                             </form>
                         </td>
