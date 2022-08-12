@@ -27,10 +27,11 @@ CREATE TABLE IF NOT EXISTS `USUARIO` (
   `email` VARCHAR(50) NOT NULL,
   `senha` VARCHAR(20) NOT NULL,
   `nome` VARCHAR(50) NOT NULL,
-  `sexo` CHAR(1) NULL,
+  `sexo` CHAR(1) NULL, -- M (macho), F (femea), O (outro)
   `telefone` VARCHAR(15) NOT NULL,
   `data_nascimento` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`CPF`)
+  PRIMARY KEY (`CPF`),
+  CONSTRAINT sexo_check CHECK (sexo IN ('M', 'F', 'O'))
 );
 
 -- -----------------------------------------------------
@@ -83,8 +84,8 @@ CREATE TABLE IF NOT EXISTS `AGENDAMENTO` (
   `CPF_Profissional` VARCHAR(14) NOT NULL,
   `data` DATE NOT NULL, -- range 0001-01-01 to 9999-12-31
   `hora` TIME NOT NULL, -- range 00:00:00.0000000 to 23:59:59.9999999
-  `status` VARCHAR(10) NOT NULL DEFAULT 'ativo',
-  PRIMARY KEY (`CPF_Profissional`,`data`, `hora`),
+  `status` VARCHAR(10) NOT NULL DEFAULT 'ativo', -- {ativo, cancelado}
+  PRIMARY KEY (`CPF_Profissional`,`data`, `hora`,`status`),
   CONSTRAINT `fk_CPF_Cliente_Agendamento`
     FOREIGN KEY (`CPF_Cliente`)
     REFERENCES `CLIENTE` (`CPF_Cliente`)
@@ -94,7 +95,25 @@ CREATE TABLE IF NOT EXISTS `AGENDAMENTO` (
     FOREIGN KEY (`CPF_Profissional`)
     REFERENCES `PROFISSIONAL` (`CPF_Profissional`)
     ON DELETE NO ACTION -- `CASCADE` TO DELETE HERE AS WELL
-    ON UPDATE NO ACTION
+    ON UPDATE NO ACTION,
+    CHECK (status IN ('ativo', 'cancelado'))
+);
+
+-- -----------------------------------------------------
+-- Table `HORARIO_CADASTRADO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `HORARIO_CADASTRADO` (
+  `CPF_Profissional` VARCHAR(14) NOT NULL,
+  `data` DATE NOT NULL, -- range 0001-01-01 to 9999-12-31
+  `hora` TIME NOT NULL, -- range 00:00:00.0000000 to 23:59:59.9999999
+  `status` VARCHAR(10) NOT NULL DEFAULT 'livre', -- {livre, ocupado}
+  PRIMARY KEY (`CPF_Profissional`,`data`, `hora`),
+  CONSTRAINT `fk_CPF_Profissional_Horario_Cadastrado`
+    FOREIGN KEY (`CPF_Profissional`)
+    REFERENCES `PROFISSIONAL` (`CPF_Profissional`)
+    ON DELETE CASCADE -- `CASCADE` TO DELETE HERE AS WELL
+    ON UPDATE CASCADE,
+  CHECK (status IN ('livre', 'ocupado'))
 );
 
 -- ------------------------------------------------------
@@ -102,8 +121,7 @@ CREATE TABLE IF NOT EXISTS `AGENDAMENTO` (
 -- ------------------------------------------------------
 -- !!! OS VALORES DEVEM ESTAR ENTRE ASPAS SIMPLES (') !!!
 
--- 4 usuarios
-
+-- USUARIOS
 INSERT INTO USUARIO (`CPF`,`email`,`senha`,`nome`,`sexo`,`telefone`,`data_nascimento`) 
 VALUES ('12345678900','user1@gmail.com','usr','Glauber Cliente da Silva','M','5511970707070','2000-12-21');
 
@@ -111,17 +129,21 @@ INSERT INTO USUARIO (`CPF`,`email`,`senha`,`nome`,`sexo`,`telefone`,`data_nascim
 VALUES ('98765432100','user2@gmail.com','pro','Gecomonildo Profissional da Silva','M','5511960606060','1999-12-21');
 
 INSERT INTO USUARIO (`CPF`,`email`,`senha`,`nome`,`sexo`,`telefone`,`data_nascimento`) 
+VALUES ('98765432200','profi0@gmail.com','pro','Profissional da Costa','M','5511960606060','1999-12-21');
+
+INSERT INTO USUARIO (`CPF`,`email`,`senha`,`nome`,`sexo`,`telefone`,`data_nascimento`) 
 VALUES ('42069621000','sandra@gmail.com','pro','Sandra Profissional da Silva','M','5511992837615','1997-11-12');
 
 INSERT INTO USUARIO (`CPF`,`email`,`senha`,`nome`,`sexo`,`telefone`,`data_nascimento`) 
 VALUES ('CPFEHSTRING','paulo@admin.com','adm','Paulo Administrador da Silva','M','5511987676545','2002-02-02');
 
--- 3 profissionais
+-- PROFISSIONAIS
 INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('98765432100','Mecânico','Direção Hidráulica','/src/qualy/0243.pdf');
 INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('42069621000','Médico','Cardiologia','todas');
+INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('98765432200','Engenheiro','Producao','todas');
 INSERT INTO ADM (`CPF_Adm`) VALUES ('CPFEHSTRING');
 
--- 1 cliente
+-- CLIENTE
 INSERT INTO CLIENTE (`CPF_Cliente`) VALUES ('12345678900');
 
 -- Usuário VAZIO
@@ -147,13 +169,19 @@ VALUES ('VAZIO','42069621000','2022-08-14','13:30:00.0000000');
 INSERT INTO AGENDAMENTO (`CPF_Cliente`,`CPF_Profissional`,`data`,`hora`) 
 VALUES ('VAZIO','42069621000','2022-08-15','13:30:00.0000000');
 
+-- INSERINDO HORARIOS DISPONIVEIS
+INSERT INTO HORARIO_CADASTRADO (`CPF_Profissional`,`data`,`hora`) VALUES ('98765432200','2022-08-15','13:30');
+INSERT INTO HORARIO_CADASTRADO (`CPF_Profissional`,`data`,`hora`) VALUES ('98765432200','2022-08-15','14:30');
+INSERT INTO HORARIO_CADASTRADO (`CPF_Profissional`,`data`,`hora`) VALUES ('98765432200','2022-08-15','15:30');
+INSERT INTO HORARIO_CADASTRADO (`CPF_Profissional`,`data`,`hora`) VALUES ('98765432200','2022-08-15','16:30');
+
 -- listagem dos horarios de conulstas de um cliente
 SELECT * FROM AGENDAMENTO WHERE CPF_Cliente = '12345678900';
 
 -- listagem dos horarios de conulstas de um profissional
 SELECT * FROM AGENDAMENTO WHERE CPF_Profissional = '98765432100';
 
-select * from USUARIO
+select * from USUARIO;
 
 -- DELETE FROM USUARIO
 -- ATENÇÃO, SIGA A SEQUENCIA INDICADA
