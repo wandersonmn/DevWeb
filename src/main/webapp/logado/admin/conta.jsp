@@ -24,15 +24,15 @@
         <div align="center">
         <form action="" id="tipousuario" method="POST">
 		<select id="tipousuario" name="tipousuario" onchange="this.form.submit()">
-					<option value="${param.tipousuario}"
-    					<c:if test="${param.tipousuario eq param.tipousersel}">selected="selected"</c:if>
+					<c:forEach items="${requestScope.listusers}" var="user">
+					<option value="${user}"
+    					<c:if test="${param.tipousuario eq user}">selected="selected"</c:if>
    					 	>
-   					 	${param.tipousuario}
+   					 	${user}
 					</option>
-                	<option value="Clientes" name="Clientes">Clientes</option>
-                	<option value="Profissionais" name="Profissionais">Profissionais</option>          	
+                	</c:forEach>          	
                 </select>
-        </form>
+        
         </div>
         
         <div align="center">
@@ -48,14 +48,15 @@
                     <tr>
                         <td>${usuarios.getNome()}</td>
                         <td>${usuarios.getEmail()}</td>
-                        <td><a href="/<%= contextPath%>/admin/edicao?cpf=${usuarios.getCPF()}">Editar</a>
+                        <td><a href="/<%= contextPath%>/admin/edicao?cpf=${usuarios.getCPF()}&tipousuario=${param.tipousuario}">Editar</a>
 						&nbsp;&nbsp;&nbsp;&nbsp; <a
-						href="/<%= contextPath%>/admin/remocao?cpf=${usuarios.getCPF()}"
+						href="/<%= contextPath%>/admin/remocao?cpf=${usuarios.getCPF()}}"
 						onclick="return confirm('Tem certeza de que deseja excluir este usuário?');">
 							Remover </a></td>
                     </tr>
                 </c:forEach>
             </table>
         </div>
+        </form>
     </body>
 </html>

@@ -21,7 +21,6 @@ public class AdminController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    private UsuarioDAO dao;
     private ClienteDAO cldao;
     private ProfissionalDAO prdao;
     private List<String> users;
@@ -30,7 +29,6 @@ public class AdminController extends HttpServlet {
     
     @Override
     public void init() {
-        dao = new UsuarioDAO();
         cldao = new ClienteDAO();
         prdao = new ProfissionalDAO();
         users = new ArrayList<String>();
@@ -89,17 +87,11 @@ public class AdminController extends HttpServlet {
             throws ServletException, IOException {
     	List<CLIENTE> listaClientes = cldao.getAll();
     	List<PROFISSIONAL> listaProfissionais = prdao.getAll();
-        List<USUARIO> listaUsuarios = dao.getAll();
         request.setAttribute("listusers", users);
-        
         
         String result = "Clientes";
         if(request.getParameter("tipousuario")!= null) {
         	result = request.getParameter("tipousuario");
-        }else {
-        	//pra ficar os clientes selecionados na primeira vez
-        	request.setAttribute("tipousersel", "Clientes");
-        	request.setAttribute("tipousuario", "Clientes");
         }
         
         
@@ -123,8 +115,25 @@ public class AdminController extends HttpServlet {
     private void apresentaFormEdicao(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String cpf = request.getParameter("cpf");
-        CLIENTE usuarios = cldao.get(cpf);
-        request.setAttribute("usuarios", usuarios);
+        PROFISSIONAL profissional;
+        CLIENTE cliente;
+        
+        String result = "Clientes";
+        if(!request.getParameter("tipousuario").equals("")) {
+        	result = request.getParameter("tipousuario");
+        }
+        
+        
+        System.out.println(request.getParameter("tipousuario"));
+        
+        if(new String(result).equals("Clientes")){
+        	cliente = cldao.get(cpf);
+        	request.setAttribute("usuarios", cliente);}
+        else  {
+        	profissional = prdao.get(cpf);
+        	request.setAttribute("usuarios", profissional);
+        }
+        
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/formulario.jsp");
         dispatcher.forward(request, response);
     }
