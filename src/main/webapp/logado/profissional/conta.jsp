@@ -23,7 +23,7 @@
         </div>
 
         <div align="center">
-            <table border="1">
+            <table id="table_consultas_agendadas" border="1">
                 <caption>Consultas Agendadas</caption>
                 <tr>
                     <th>Paciente</th>
@@ -31,16 +31,16 @@
                     <th>Hora</th>
                     <th>Ações</th>
                 </tr>
-                <c:forEach var="agenda" items="${requestScope.listaAgendamentos}">
+                <c:forEach var="agenda" items="${requestScope.listaAgendamentos}" varStatus="loop">
                     <tr>
                         <td>${agenda.getCliente().getNome()}</td>
                         <td>${agenda.getData()}</td>
                         <td>${agenda.getHora()}</td>
                         <td>
                             <form name="submitForm" method="POST" action="/<%= contextPath%>/profissional/cancelarHorario">
-                                <input type="hidden" name="data" value="${agenda.getData()}"">
-                                <input type="hidden" name="hora" value="${agenda.getHora()}">
-                                <input type="submit" name="btn" value="Cancelar">
+                                <input type="hidden" id="data_${loop.index}" name="data" value="${agenda.getData()}"">
+                                <input type="hidden" id="hora_${loop.index}" name="hora" value="${agenda.getHora()}">
+                                <input type="submit" id="btn_${loop.index}" name="btn" value="Cancelar">
                             </form>
                         </td>
                     </tr>
@@ -92,6 +92,39 @@
                 </c:forEach>
             </table>
         </div>
-    <script src="${pageContext.request.contextPath}/scripts.js" async defer></script>
+    <script async defer>
+ 	// NAO PERMITIR DATAS ANTERIORES AO DIA DE HOJE
+    today = new Date();
+    humanMonth = today.getUTCMonth() + 1;
+
+    if (humanMonth < 10){
+    	humanMonth = '0' + humanMonth;
+    }
+
+    minDate = today.getFullYear() + "-" + humanMonth + "-" + today.getUTCDate();
+    const inputDateElement = document.querySelector("#data");
+    inputDateElement.setAttribute("min", minDate);
+    
+ 	// NAO PERMITIR CANCELAMENTO COM MENOS DE 3 DIAS
+    numAgendamentos = document.getElementById("table_consultas_agendadas").rows.length;
+    diasLimiteParaCancelar = 3;
+
+    for (var i = 0; i < numAgendamentos; i++)
+    {
+    	var agendamentoData = document.getElementById("data_"+i).value;
+    	var agendamentoHora = document.getElementById("hora_"+i).value;
+    	var agendamentoDate = new Date(agendamentoData + "T" + agendamentoHora);
+    	
+    	// (dia da consulta) - (dia atual)
+    	var agendamentoDelta = agendamentoDate - today;
+    	var deltaEmDias = Math.floor(agendamentoDelta/(24 * 3600 * 1000));
+    	
+    	if (deltaEmDias < diasLimiteParaCancelar)
+    	{
+    		var btnCancel = document.getElementById("btn_"+i);
+    		btnCancel.setAttribute("disabled", "disabled");
+    	}
+    }
+    </script>
     </body>
 </html>

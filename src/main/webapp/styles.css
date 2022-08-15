@@ -304,7 +304,7 @@ FORM
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: var(--primary-color);
+  background: var(--primary-color); 
   width: 100%;
   border: 0;
   padding: 15px;
@@ -325,11 +325,4 @@ FORM
 .container .info {
   margin: 50px auto;
   text-align: center;
-}
-
-#erro {
-    width: 85%;
-    margin: 0 auto;
-    border: 1px solid red;
-    background-color: beige;
 }
