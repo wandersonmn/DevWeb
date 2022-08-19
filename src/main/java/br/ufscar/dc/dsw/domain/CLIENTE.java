@@ -1,12 +1,17 @@
 package br.ufscar.dc.dsw.domain;
 
-public class CLIENTE extends USUARIO{	
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Cliente")
+public class Cliente extends Usuario{	
 	
-	public CLIENTE(){
-		super("VAZIO", "USUARIO_VAZIO", "USUARIO_VAZIO", "USUARIO_VAZIO", "M", "USUARIO_VAZIO", "USUARIO_VAZIO");
+	public Cliente(){
+		super("VAZIO", "Usuario_VAZIO", "Usuario_VAZIO", "Usuario_VAZIO", "M", "Usuario_VAZIO", "Usuario_VAZIO");
 	}
 
-	public CLIENTE(String cpf,
+	public Cliente(String cpf,
 				   String email, 
 				   String senha, 
 				   String nome, 
@@ -17,7 +22,7 @@ public class CLIENTE extends USUARIO{
 		super(cpf, email, senha, nome, sexo, telefone, data_nascimento);
     }
 	
-	public CLIENTE(USUARIO u) {
+	public Cliente(Usuario u) {
 		super(u.getCPF(),u.getEmail() , u.getSenha(), u.getNome(), u.getSexo(),u.getTelefone(), u.getData_nascimento());
 		
 	}

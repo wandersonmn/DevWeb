@@ -1,7 +1,7 @@
 package br.ufscar.dc.dsw.controller;
 
 import br.ufscar.dc.dsw.dao.ProfissionalDAO;
-import br.ufscar.dc.dsw.domain.PROFISSIONAL;
+import br.ufscar.dc.dsw.domain.Profissional;
 
 import java.io.IOException;
 import java.util.List;
@@ -53,7 +53,7 @@ public class IndexController extends HttpServlet {
 
     private void lista(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<PROFISSIONAL> listaProfissionais = pDao.getAll();
+        List<Profissional> listaProfissionais = pDao.getAll();
         request.setAttribute("listaProfissionais", listaProfissionais);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/inicial.jsp");
         dispatcher.forward(request, response);
@@ -62,7 +62,7 @@ public class IndexController extends HttpServlet {
     // private void agendar(HttpServletRequest request, HttpServletResponse response) 
     //         throws ServletException, IOException {
     //     String cpf_profissional = request.getParameter("CPF_Profissional");
-    //     PROFISSIONAL profissional = pDao.get(cpf_profissional);
+    //     Profissional profissional = pDao.get(cpf_profissional);
     //     request.setAttribute("profissional", profissional);
     //     request.setAttribute("agendamentos", aDao.getAllProfissional(profissional.getCPF()));
     //     RequestDispatcher dispatcher = request.getRequestDispatcher("/profissional/formulario.jsp");

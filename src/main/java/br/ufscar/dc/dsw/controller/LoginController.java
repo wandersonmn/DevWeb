@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.ufscar.dc.dsw.dao.UsuarioDAO;
 import br.ufscar.dc.dsw.dao.UsuarioDAO.Papel;
-// import br.ufscar.dc.dsw.domain.PROFISSIONAL;
-import br.ufscar.dc.dsw.domain.USUARIO;
-// import br.ufscar.dc.dsw.domain.ADMIN;
-// import br.ufscar.dc.dsw.domain.CLIENTE;
+// import br.ufscar.dc.dsw.domain.Profissional;
+import br.ufscar.dc.dsw.domain.Usuario;
+// import br.ufscar.dc.dsw.domain.Admin;
+// import br.ufscar.dc.dsw.domain.Cliente;
 import br.ufscar.dc.dsw.util.Erro;
 
 /*
@@ -52,7 +52,7 @@ public class LoginController extends HttpServlet {
 			}
 			if (!erros.isExisteErros()) {
 				UsuarioDAO dao = new UsuarioDAO();
-				USUARIO usuario = dao.getByMail(login); // ! Login == Email do usuário
+				Usuario usuario = dao.getByMail(login); // ! Login == Email do usuário
 				if (usuario != null) {
 					if (usuario.getSenha().equals(senha)) {
 						request.getSession().setAttribute("usuarioLogado", usuario);

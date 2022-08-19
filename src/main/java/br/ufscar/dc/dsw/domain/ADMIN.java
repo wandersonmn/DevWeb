@@ -1,8 +1,16 @@
 package br.ufscar.dc.dsw.domain;
 
-public class ADMIN extends USUARIO{
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Admin")
+public class Admin extends Usuario{
     
-    public ADMIN(String cpf,
+    public Admin(String cpf,
                  String nome, 
                  String senha, 
                  String email, 

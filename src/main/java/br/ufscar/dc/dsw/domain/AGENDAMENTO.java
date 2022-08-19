@@ -1,14 +1,40 @@
 package br.ufscar.dc.dsw.domain;
 
-public class AGENDAMENTO {
-	private CLIENTE cliente;
-	private PROFISSIONAL profissional;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
+@Table(name = "Agendamento")
+public class Agendamento {
+
+	@OneToOne
+	private Cliente cliente;
+
+	@OneToOne
+	private Profissional profissional;
+
+	@Column(nullable = true, unique = false, length = 40)
 	private String status;
-	private String data; /*pesquisar tipo adequado*/
-	private String hora; /*pesquisar tipo adequado*/
+
+	// temporalValues.setUtilDate(
+	// 	new SimpleDateFormat("yyyy-MM-dd").parse("2017-11-15"));
+	// temporalValues.setUtilTime(
+	// 	new SimpleDateFormat("HH:mm:ss").parse("15:30:14"));
+
+	@Column(nullable = false, unique = false, length = 40)
+	@Temporal(TemporalType.DATE)
+	private java.util.Date data; /*pesquisar tipo adequado*/
+
+	@Column(nullable = false, unique = false, length = 40)
+	@Temporal(TemporalType.TIME)
+	private java.util.Date hora; /*pesquisar tipo adequado*/
 	
-	public AGENDAMENTO (CLIENTE cliente, 
-						PROFISSIONAL profissional, 
+	public Agendamento (Cliente cliente, 
+						Profissional profissional, 
 						String status, 
 						String data, 
 						String hora
@@ -20,20 +46,20 @@ public class AGENDAMENTO {
 		this.hora = hora;
 	}
 
-	public AGENDAMENTO (CLIENTE c, PROFISSIONAL p, String data, String hora){
+	public Agendamento (Cliente c, Profissional p, String data, String hora){
 		this(c, p, "ativo", data, hora);
 	}
 
-	public CLIENTE getCliente() {
+	public Cliente getCliente() {
 		return cliente;
 	}
-	public void setCliente(CLIENTE cliente) {
+	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	public PROFISSIONAL getProfissional() {
+	public Profissional getProfissional() {
 		return profissional;
 	}
-	public void setProfissional(PROFISSIONAL profissional) {
+	public void setProfissional(Profissional profissional) {
 		this.profissional = profissional;
 	}
 	public String getStatus() {
@@ -42,16 +68,16 @@ public class AGENDAMENTO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getData() {
+	public java.util.Date getData() {
 		return data;
 	}
-	public void setData(String data) {
+	public void setData(java.util.Date data) {
 		this.data = data;
 	}
-	public String getHora() {
+	public java.util.Date getHora() {
 		return hora;
 	}
-	public void setHora(String hora) {
+	public void setHora(java.util.Date hora) {
 		this.hora = hora;
 	}
 }

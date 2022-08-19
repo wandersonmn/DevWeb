@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.ufscar.dc.dsw.dao.UsuarioDAO.Papel;
-import br.ufscar.dc.dsw.domain.USUARIO;
+import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.domain.*;
 import br.ufscar.dc.dsw.dao.*;
 import br.ufscar.dc.dsw.util.Erro;
@@ -41,7 +41,7 @@ public class ClienteController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("== [LOG]: ClienteController");
 
-    	USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
+    	Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
     	Erro erros = new Erro();
 		UsuarioDAO dao = new UsuarioDAO();
     	
@@ -84,7 +84,7 @@ public class ClienteController extends HttpServlet {
 
     private void lista(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
+    	Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
     	String cpf = usuario.getCPF();
         List<AGENDAMENTO> listaAgendamentos = Agdao.getAllCliente(cpf);
         request.setAttribute("listaAgendamentos", listaAgendamentos);
@@ -109,9 +109,9 @@ public class ClienteController extends HttpServlet {
         String data = (String)request.getParameter("data");
         String hora = (String)request.getParameter("hora");
         // Inserindo consulta no BD
-        USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
-        CLIENTE cliente = cDao.get(usuario.getCPF());
-        PROFISSIONAL profissional = pDao.get(cpf_profissional);
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+        Cliente cliente = cDao.get(usuario.getCPF());
+        Profissional profissional = pDao.get(cpf_profissional);
         AGENDAMENTO agendamento = new AGENDAMENTO(cliente, profissional, data, hora);
         Agdao.agendar(agendamento);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/cliente");
@@ -124,10 +124,10 @@ public class ClienteController extends HttpServlet {
         String data = (String)request.getParameter("data");
         String hora = (String)request.getParameter("hora");
         // Inserindo consulta no BD
-        USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
-        CLIENTE cliente = cDao.get(usuario.getCPF());
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+        Cliente cliente = cDao.get(usuario.getCPF());
         System.out.println("ClienteController - Buscando profissional de cpf " + cpf_profissional);
-        PROFISSIONAL profissional = pDao.get(cpf_profissional);
+        Profissional profissional = pDao.get(cpf_profissional);
         AGENDAMENTO agendamento = new AGENDAMENTO(cliente, profissional, data, hora);
         Agdao.cancelar(agendamento);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/cliente");

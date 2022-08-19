@@ -15,17 +15,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufscar.dc.dsw.domain.USUARIO;
-import br.ufscar.dc.dsw.domain.PROFISSIONAL;
+import br.ufscar.dc.dsw.domain.Usuario;
+import br.ufscar.dc.dsw.domain.Profissional;
 
 public class ProfissionalDAO extends GenericDAO {
 
-    public void insert(PROFISSIONAL profissional) {
+    public void insert(Profissional profissional) {
 
         UsuarioDAO udao = new UsuarioDAO();
         udao.insert(profissional);
 
-        String sql = "INSERT INTO PROFISSIONAL (CPF_Profissional, area_atuacao, especialidade, qualificacoes) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Profissional (CPF_Profissional, area_atuacao, especialidade, qualificacoes) VALUES (?, ?, ?, ?)";
 
         try {
             Connection conn = this.getConnection();
@@ -45,11 +45,11 @@ public class ProfissionalDAO extends GenericDAO {
         }
     }
 
-    public List<PROFISSIONAL> getAll() {
+    public List<Profissional> getAll() {
 
-        List<PROFISSIONAL> listaProfissionais = new ArrayList<>();
+        List<Profissional> listaProfissionais = new ArrayList<>();
 
-        String sql = "SELECT * from PROFISSIONAL p, USUARIO u where p.CPF_Profissional = u.CPF order by p.CPF_Profissional";
+        String sql = "SELECT * from Profissional p, Usuario u where p.CPF_Profissional = u.CPF order by p.CPF_Profissional";
 
         try {
             Connection conn = this.getConnection();
@@ -67,7 +67,7 @@ public class ProfissionalDAO extends GenericDAO {
                 String sexo = resultSet.getString("sexo");
                 String telefone = resultSet.getString("telefone");
                 String data_nascimento = resultSet.getString("data_nascimento");
-                PROFISSIONAL profissional = new PROFISSIONAL(cpf, nome, senha, email, sexo, telefone, data_nascimento, area_atuacao, especialidade, qualificacoes);
+                Profissional profissional = new Profissional(cpf, nome, senha, email, sexo, telefone, data_nascimento, area_atuacao, especialidade, qualificacoes);
                 listaProfissionais.add(profissional);
             }
 
@@ -80,8 +80,8 @@ public class ProfissionalDAO extends GenericDAO {
         return listaProfissionais;
     }
 
-    public void delete(PROFISSIONAL profissional) {
-        String sql = "DELETE FROM PROFISSIONAL where CPF_Profissional = ?";
+    public void delete(Profissional profissional) {
+        String sql = "DELETE FROM Profissional where CPF_Profissional = ?";
 
         try {
             Connection conn = this.getConnection();
@@ -97,8 +97,8 @@ public class ProfissionalDAO extends GenericDAO {
         }
     }
 
-    public void update(PROFISSIONAL profissional) {
-        String sql = "UPDATE PROFISSIONAL SET CPF_Profissional = ?, area_atuacao = ?, especialidade = ?, qualificacoes = ?";
+    public void update(Profissional profissional) {
+        String sql = "UPDATE Profissional SET CPF_Profissional = ?, area_atuacao = ?, especialidade = ?, qualificacoes = ?";
         sql += "WHERE CPF_Profissional = ?";
 
         try {
@@ -120,7 +120,7 @@ public class ProfissionalDAO extends GenericDAO {
     }
 
     public boolean valid(String CPF) {
-        String sql = "SELECT * FROM PROFISSIONAL u where u.CPF_Profissional = ?";
+        String sql = "SELECT * FROM Profissional u where u.CPF_Profissional = ?";
 
         try {
             Connection conn = this.getConnection();
@@ -148,10 +148,10 @@ public class ProfissionalDAO extends GenericDAO {
         }
     }
 
-    public PROFISSIONAL get(String CPF_Profissional) {
+    public Profissional get(String CPF_Profissional) {
         System.out.println("ProfissionalDAO - Buscando profissional de cpf " + CPF_Profissional);
-        PROFISSIONAL profissional = null;
-        String sql = "SELECT * from PROFISSIONAL p inner join USUARIO u on (p.CPF_Profissional = u.CPF) where p.CPF_Profissional = ?";
+        Profissional profissional = null;
+        String sql = "SELECT * from Profissional p inner join Usuario u on (p.CPF_Profissional = u.CPF) where p.CPF_Profissional = ?";
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -166,9 +166,9 @@ public class ProfissionalDAO extends GenericDAO {
                 
 
                 String cpf = resultSet.getString("cpf");
-                USUARIO usuario = new UsuarioDAO().get(cpf);
+                Usuario usuario = new UsuarioDAO().get(cpf);
 
-                profissional = new PROFISSIONAL(usuario, area_atuacao, especialidade, qualificacoes);
+                profissional = new Profissional(usuario, area_atuacao, especialidade, qualificacoes);
             }
             System.out.println("ProfissionalDAO - Query Executado, cpf obtido = " + profissional.getCPF());
 

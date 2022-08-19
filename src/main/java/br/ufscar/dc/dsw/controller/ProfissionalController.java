@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.ufscar.dc.dsw.dao.UsuarioDAO.Papel;
-import br.ufscar.dc.dsw.domain.USUARIO;
+import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.domain.*;
 import br.ufscar.dc.dsw.dao.*;
 import br.ufscar.dc.dsw.util.Erro;
@@ -38,7 +38,7 @@ public class ProfissionalController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
-    	USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
+    	Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
     	Erro erros = new Erro();
 		UsuarioDAO dao = new UsuarioDAO();
     	
@@ -83,7 +83,7 @@ public class ProfissionalController extends HttpServlet {
 
 	private void lista(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
+    	Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
     	String cpf = usuario.getCPF();
 
         List<AGENDAMENTO> listaAgendamentos = Agdao.getOcup(cpf);
@@ -101,9 +101,9 @@ public class ProfissionalController extends HttpServlet {
 		String hora = (String)request.getParameter("hora");
 
 		// Criando horário com cliente vazio no BD
-		USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
-		PROFISSIONAL profissional = pDao.get(usuario.getCPF());
-		CLIENTE cliente = new CLIENTE(); // CLIENTE VAZIO
+		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+		Profissional profissional = pDao.get(usuario.getCPF());
+		Cliente cliente = new Cliente(); // Cliente VAZIO
 		AGENDAMENTO agendamento = new AGENDAMENTO(cliente, profissional, data, hora);
 		Agdao.insert(agendamento);
 
@@ -116,10 +116,10 @@ public class ProfissionalController extends HttpServlet {
 		String hora = (String)request.getParameter("hora");
 		
 		// Cancelando consulta no BD
-		USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
-		CLIENTE cliente = new CLIENTE();
+		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+		Cliente cliente = new Cliente();
 		System.out.println("ProfissionalController - Buscando profissional de cpf " + usuario.getCPF());
-		PROFISSIONAL profissional = pDao.get(usuario.getCPF());
+		Profissional profissional = pDao.get(usuario.getCPF());
 		System.out.println("ProfissionalController - Buscando profissional de cpf " + usuario.getCPF());
 		AGENDAMENTO agendamento = new AGENDAMENTO(cliente, profissional, data, hora);
 		Agdao.cancelar(agendamento);
@@ -133,9 +133,9 @@ public class ProfissionalController extends HttpServlet {
 		String hora = (String)request.getParameter("hora");
 
 		// Deletando consulta no BD
-		USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
-		CLIENTE cliente = new CLIENTE();
-		PROFISSIONAL profissional = pDao.get(usuario.getCPF());
+		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+		Cliente cliente = new Cliente();
+		Profissional profissional = pDao.get(usuario.getCPF());
 		AGENDAMENTO agendamento = new AGENDAMENTO(cliente, profissional, data, hora);
 		Agdao.deleteProfissional(agendamento);
 

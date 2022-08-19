@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.ufscar.dc.dsw.domain.USUARIO;
+import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.dao.UsuarioDAO;
 import br.ufscar.dc.dsw.dao.UsuarioDAO.Papel;
 import br.ufscar.dc.dsw.util.Erro;
@@ -27,7 +27,7 @@ public class Redirect extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("== [LOG]: RedirectController");
     	
-    	USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
+    	Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
     	Erro erros = new Erro();
 		UsuarioDAO dao = new UsuarioDAO();
     	

@@ -46,7 +46,7 @@ public class AdminController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("== [LOG]: AdminController");
     	
-    	USUARIO usuario = (USUARIO) request.getSession().getAttribute("usuarioLogado");
+    	Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
     	Erro erros = new Erro();
 		UsuarioDAO dao = new UsuarioDAO();
     	
@@ -76,7 +76,7 @@ public class AdminController extends HttpServlet {
             	
     	} else {
     		erros.add("Acesso não autorizado!");
-    		erros.add("Apenas Papel [ADMIN] tem acesso a essa página");
+    		erros.add("Apenas Papel [Admin] tem acesso a essa página");
     		request.setAttribute("mensagens", erros);
     		RequestDispatcher rd = request.getRequestDispatcher("/noAuth.jsp");
     		rd.forward(request, response);
@@ -85,8 +85,8 @@ public class AdminController extends HttpServlet {
     
     private void lista(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	List<CLIENTE> listaClientes = cldao.getAll();
-    	List<PROFISSIONAL> listaProfissionais = prdao.getAll();
+    	List<Cliente> listaClientes = cldao.getAll();
+    	List<Profissional> listaProfissionais = prdao.getAll();
         request.setAttribute("listusers", users);
         
         String result = "Clientes";
@@ -115,8 +115,8 @@ public class AdminController extends HttpServlet {
     private void apresentaFormEdicao(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String cpf = request.getParameter("cpf");
-        PROFISSIONAL profissional;
-        CLIENTE cliente;
+        Profissional profissional;
+        Cliente cliente;
         
         String result = "Clientes";
         if(!request.getParameter("tipousuario").equals("")) {
@@ -172,17 +172,17 @@ public class AdminController extends HttpServlet {
         String especialidade = request.getParameter("especialidade");
         String qualificacoes = request.getParameter("qualificacoes");
         
-        USUARIO user = new USUARIO(cpf, email, senha,  nome,  sexo, 
+        Usuario user = new Usuario(cpf, email, senha,  nome,  sexo, 
     			 telefone,  data_nascimento);
         
         System.out.printf("%s %s %s %s %s %s %s", cpf, email, senha,  nome,  sexo, 
    			 telefone,  data_nascimento);
         System.out.println(request.getParameter("tipousuario"));
         if(request.getParameter("tipousuario").equals("Profissionais")) {
-        	PROFISSIONAL pro = new PROFISSIONAL(user, area_atuacao,especialidade,qualificacoes);
+        	Profissional pro = new Profissional(user, area_atuacao,especialidade,qualificacoes);
         	prdao.update(pro);
         }else {
-        	CLIENTE cli = new CLIENTE(user);
+        	Cliente cli = new Cliente(user);
         	cldao.update(cli);
         }
         response.sendRedirect("lista");

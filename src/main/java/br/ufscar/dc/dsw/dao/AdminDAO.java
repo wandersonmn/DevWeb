@@ -8,15 +8,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufscar.dc.dsw.domain.ADMIN;
+import br.ufscar.dc.dsw.domain.Admin;
 
 public class AdminDAO extends GenericDAO {
 
-    public void insert(ADMIN admin) {
+    public void insert(Admin admin) {
         UsuarioDAO dao = new UsuarioDAO();
         dao.insert(admin);
 
-        String sql = "INSERT INTO ADMIN (CPF_Cliente) VALUES (?)";
+        String sql = "INSERT INTO Admin (CPF_Cliente) VALUES (?)";
 
         try {
             Connection conn = this.getConnection();
@@ -32,11 +32,11 @@ public class AdminDAO extends GenericDAO {
         }
     }
 
-    public List<ADMIN> getAll() {
+    public List<Admin> getAll() {
 
-        List<ADMIN> listaClientes = new ArrayList<>();
+        List<Admin> listaClientes = new ArrayList<>();
 
-        String sql = "SELECT * from ADMIN p, USUARIO u where p.CPF_Adm = u.CPF order by p.CPF_Adm";
+        String sql = "SELECT * from Admin p, Usuario u where p.CPF_Adm = u.CPF order by p.CPF_Adm";
 
         try {
             Connection conn = this.getConnection();
@@ -51,7 +51,7 @@ public class AdminDAO extends GenericDAO {
                 String sexo = resultSet.getString("sexo");
                 String telefone = resultSet.getString("telefone");
                 String data_nascimento = resultSet.getString("data_nascimento");
-                ADMIN admin = new ADMIN(cpf, email, senha, nome, sexo, telefone, data_nascimento);
+                Admin admin = new Admin(cpf, email, senha, nome, sexo, telefone, data_nascimento);
                 listaClientes.add(admin);
             }
 
@@ -64,8 +64,8 @@ public class AdminDAO extends GenericDAO {
         return listaClientes;
     }
 
-    public void delete(ADMIN admin) {
-        String sql = "DELETE FROM ADMIN where CPF_Adm = ?";
+    public void delete(Admin admin) {
+        String sql = "DELETE FROM Admin where CPF_Adm = ?";
 
         try {
             Connection conn = this.getConnection();
@@ -81,8 +81,8 @@ public class AdminDAO extends GenericDAO {
         }
     }
 
-    public void update(ADMIN admin) {
-        String sql = "UPDATE ADMIN SET CPF = ?, email = ?, senha = ?, "
+    public void update(Admin admin) {
+        String sql = "UPDATE Admin SET CPF = ?, email = ?, senha = ?, "
         		+ "nome = ?, sexo = ?, telefone = ?, data_nascimento = ?";
         sql += "WHERE CPF = ?";
 
@@ -135,10 +135,10 @@ public class AdminDAO extends GenericDAO {
         }
     }
 
-    public ADMIN get(String CPF) {
-        ADMIN admin = null;
+    public Admin get(String CPF) {
+        Admin admin = null;
 
-        String sql = "SELECT * from ADMIN u where u.CPF = ?";
+        String sql = "SELECT * from Admin u where u.CPF = ?";
 
         try {
             Connection conn = this.getConnection();
@@ -155,7 +155,7 @@ public class AdminDAO extends GenericDAO {
                 String telefone = resultSet.getString("telefone");
                 String data_nascimento = resultSet.getString("data_nascimento");
                 
-                admin = new ADMIN(cpf, email, senha, nome, sexo, telefone, data_nascimento);
+                admin = new Admin(cpf, email, senha, nome, sexo, telefone, data_nascimento);
             }
 
             resultSet.close();

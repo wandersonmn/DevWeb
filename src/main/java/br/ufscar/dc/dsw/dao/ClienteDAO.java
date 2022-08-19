@@ -1,22 +1,28 @@
 package br.ufscar.dc.dsw.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
-import br.ufscar.dc.dsw.domain.CLIENTE;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+
+// import java.sql.Connection;
+// import java.sql.PreparedStatement;
+// import java.sql.ResultSet;
+// import java.sql.SQLException;
+// import java.sql.Statement;
+// import java.util.ArrayList;
+// import java.util.List;
+
+import br.ufscar.dc.dsw.domain.Cliente;
 
 public class ClienteDAO extends GenericDAO {
 
-    public void insert(CLIENTE cliente) {
+    public void insert(Cliente cliente) {
         UsuarioDAO dao = new UsuarioDAO();
         dao.insert(cliente);
 
-        String sql = "INSERT INTO CLIENTE (CPF_Cliente) VALUES (?)";
+        String sql = "INSERT INTO Cliente (CPF_Cliente) VALUES (?)";
 
         try {
             Connection conn = this.getConnection();
@@ -32,11 +38,11 @@ public class ClienteDAO extends GenericDAO {
         }
     }
 
-    public List<CLIENTE> getAll() {
+    public List<Cliente> getAll() {
 
-        List<CLIENTE> listaClientes = new ArrayList<>();
+        List<Cliente> listaClientes = new ArrayList<>();
 
-        String sql = "SELECT * from CLIENTE p, USUARIO u where p.CPF_Cliente = u.CPF order by p.CPF_Cliente";
+        String sql = "SELECT * from Cliente p, Usuario u where p.CPF_Cliente = u.CPF order by p.CPF_Cliente";
 
         try {
             Connection conn = this.getConnection();
@@ -51,7 +57,7 @@ public class ClienteDAO extends GenericDAO {
                 String sexo = resultSet.getString("sexo");
                 String telefone = resultSet.getString("telefone");
                 String data_nascimento = resultSet.getString("data_nascimento");
-                CLIENTE cliente = new CLIENTE(cpf, email, senha, nome, sexo, telefone, data_nascimento);
+                Cliente cliente = new Cliente(cpf, email, senha, nome, sexo, telefone, data_nascimento);
                 listaClientes.add(cliente);
             }
 
@@ -64,8 +70,8 @@ public class ClienteDAO extends GenericDAO {
         return listaClientes;
     }
 
-    public void delete(CLIENTE cliente) {
-        String sql = "DELETE FROM CLIENTE where CPF_Cliente = ?";
+    public void delete(Cliente cliente) {
+        String sql = "DELETE FROM Cliente where CPF_Cliente = ?";
 
         try {
             Connection conn = this.getConnection();
@@ -81,8 +87,8 @@ public class ClienteDAO extends GenericDAO {
         }
     }
 
-    public void update(CLIENTE cliente) {
-        String sql = "UPDATE CLIENTE SET CPF_Cliente = ?, email = ?, senha = ?, "
+    public void update(Cliente cliente) {
+        String sql = "UPDATE Cliente SET CPF_Cliente = ?, email = ?, senha = ?, "
         		+ "nome = ?, sexo = ?, telefone = ?, data_nascimento = ?";
         sql += "WHERE CPF_Cliente = ?";
 
@@ -108,7 +114,7 @@ public class ClienteDAO extends GenericDAO {
     }
 
     public boolean valid(String CPF) {
-        String sql = "SELECT * FROM CLIENTE u where u.CPF_Cliente = ?";
+        String sql = "SELECT * FROM Cliente u where u.CPF_Cliente = ?";
 
         try {
             Connection conn = this.getConnection();
@@ -136,10 +142,10 @@ public class ClienteDAO extends GenericDAO {
         }
     }
 
-    public CLIENTE get(String CPF) {
-        CLIENTE cliente = null;
+    public Cliente get(String CPF) {
+        Cliente cliente = null;
 
-        String sql = "SELECT * from CLIENTE c,USUARIO u where CPF_Cliente = ? and c.CPF_Cliente = u.CPF";
+        String sql = "SELECT * from Cliente c,Usuario u where CPF_Cliente = ? and c.CPF_Cliente = u.CPF";
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -155,7 +161,7 @@ public class ClienteDAO extends GenericDAO {
                 String telefone = resultSet.getString("telefone");
                 String data_nascimento = resultSet.getString("data_nascimento");
                 
-                cliente = new CLIENTE(cpf, email, senha, nome, sexo, telefone, data_nascimento);
+                cliente = new Cliente(cpf, email, senha, nome, sexo, telefone, data_nascimento);
             }
 
             resultSet.close();
