@@ -97,6 +97,7 @@ public class ClienteDAO extends GenericDAO {
             statement.setString(5, cliente.getSexo());
             statement.setString(6, cliente.getTelefone());
             statement.setString(7, cliente.getData_nascimento());
+            statement.setString(8, cliente.getCPF());
             statement.executeUpdate();
 
             statement.close();

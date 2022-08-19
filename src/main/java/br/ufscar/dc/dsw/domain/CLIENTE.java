@@ -16,5 +16,10 @@ public class CLIENTE extends USUARIO{
 	) {
 		super(cpf, email, senha, nome, sexo, telefone, data_nascimento);
     }
+	
+	public CLIENTE(USUARIO u) {
+		super(u.getCPF(),u.getEmail() , u.getSenha(), u.getNome(), u.getSexo(),u.getTelefone(), u.getData_nascimento());
+		
+	}
 
 }

@@ -18,14 +18,31 @@
 	<div align="center">
 		<c:choose>
 			<c:when test="${usuarios != null}">
-				<form action="atualizacao" method="post">
-					<%@include file="camposCli.jsp"%>
-				</form>
+				<c:choose>
+					<c:when  test="${param.tipousuario =='Profissionais'}">
+						<form action="atualizacao" method="post">
+							<%@include file="camposPro.jsp"%>
+						</form>
+					</c:when>
+					<c:otherwise>
+						<form action="atualizacao" method="post">
+							<%@include file="camposCli.jsp"%>
+						</form>
+					</c:otherwise>
+				</c:choose>
+				
 			</c:when>
 			<c:otherwise>
-				<form action="insercao" method="post">
-					<%@include file="camposCli.jsp"%>
-				</form>
+				<c:when  test="${param.tipousuario =='Profissionais'}">
+						<form action="insercao" method="post">
+							<%@include file="camposPro.jsp"%>
+						</form>
+					</c:when>
+					<c:otherwise>
+						<form action="insercao" method="post">
+							<%@include file="camposCli.jsp"%>
+						</form>
+					</c:otherwise>
 			</c:otherwise>
 		</c:choose>
 	</div>

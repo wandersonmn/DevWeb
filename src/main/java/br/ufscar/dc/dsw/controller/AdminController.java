@@ -64,8 +64,8 @@ public class AdminController extends HttpServlet {
                     case "/edicao":
                     	apresentaFormEdicao(request, response);
                         break;
-                    case "/remocao":
-                    	lista(request, response);
+                    case "/atualizacao":
+                    	atualize(request, response);
                     	break;
                     default:
                         lista(request, response);
@@ -154,25 +154,40 @@ public class AdminController extends HttpServlet {
         dao.insert(livro);
         response.sendRedirect("lista");
     }
-
+	*/
     private void atualize(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+    	System.out.println("LOG -- atualize()");
         request.setCharacterEncoding("UTF-8");
-        Long id = Long.parseLong(request.getParameter("id"));
-        String titulo = request.getParameter("titulo");
-        String autor = request.getParameter("autor");
-        Integer ano = Integer.parseInt(request.getParameter("ano"));
-        Float preco = Float.parseFloat(request.getParameter("preco"));
+        String cpf = request.getParameter("cpf");
+        String nome = request.getParameter("nome");
+        String email = request.getParameter("email");
+        String sexo = request.getParameter("sexo");
+        String telefone = request.getParameter("telefone");
+        String data_nascimento = request.getParameter("data_nascimento");
+        String senha = request.getParameter("senha");
         
-        Long editoraID = Long.parseLong(request.getParameter("editora"));
-        Editora editora = new EditoraDAO().get(editoraID);
+        //profissional
+        String area_atuacao = request.getParameter("area_atuacao");
+        String especialidade = request.getParameter("especialidade");
+        String qualificacoes = request.getParameter("qualificacoes");
         
-        Livro livro = new Livro(id, titulo, autor, ano, preco, editora);
-        dao.update(livro);
+        USUARIO user = new USUARIO(cpf, email, senha,  nome,  sexo, 
+    			 telefone,  data_nascimento);
+        
+        System.out.printf("%s %s %s %s %s %s %s", cpf, email, senha,  nome,  sexo, 
+   			 telefone,  data_nascimento);
+        System.out.println(request.getParameter("tipousuario"));
+        if(request.getParameter("tipousuario").equals("Profissionais")) {
+        	PROFISSIONAL pro = new PROFISSIONAL(user, area_atuacao,especialidade,qualificacoes);
+        	prdao.update(pro);
+        }else {
+        	CLIENTE cli = new CLIENTE(user);
+        	cldao.update(cli);
+        }
         response.sendRedirect("lista");
     }
-
+    /*
     private void remove(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         Long id = Long.parseLong(request.getParameter("id"));
