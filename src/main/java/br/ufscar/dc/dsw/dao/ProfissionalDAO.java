@@ -97,19 +97,22 @@ public class ProfissionalDAO extends GenericDAO {
         }
     }
 
-    public void update(PROFISSIONAL profissional) {
-        String sql = "UPDATE PROFISSIONAL SET CPF_Profissional = ?, area_atuacao = ?, especialidade = ?, qualificacoes = ?";
-        sql += "WHERE CPF_Profissional = ?";
+    public void update(PROFISSIONAL pro) {
+        //USUARIO user = new USUARIO(pro.getCPF(),pro.getEmail(),pro.getSenha(),pro.getNome(),pro.getSexo(),pro.getTelefone(),pro.getData_nascimento());
+        UsuarioDAO udao = new UsuarioDAO();
+        udao.update(pro);
+    	String sql = "UPDATE PROFISSIONAL SET cpf_profissional = ?, area_atuacao = ?, especialidade = ?, qualificacoes = ?";
+        sql += "WHERE cpf_profissional = ?";
 
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setString(1, profissional.getCPF());
-            statement.setString(2, profissional.getArea_atuacao());
-            statement.setString(3, profissional.getEspecialidade());
-            statement.setString(4, profissional.getQualificacoes());
-            statement.setString(5, profissional.getCPF());
+            statement.setString(1, pro.getCPF());
+            statement.setString(2, pro.getArea_atuacao());
+            statement.setString(3, pro.getEspecialidade());
+            statement.setString(4, pro.getQualificacoes());
+            statement.setString(5, pro.getCPF());
             statement.executeUpdate();
 
             statement.close();
