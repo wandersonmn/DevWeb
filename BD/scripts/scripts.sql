@@ -138,9 +138,9 @@ INSERT INTO USUARIO (`CPF`,`email`,`senha`,`nome`,`sexo`,`telefone`,`data_nascim
 VALUES ('CPFEHSTRING','paulo@admin.com','adm','Paulo Administrador da Silva','M','5511987676545','2002-02-02');
 
 -- PROFISSIONAIS
-INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('98765432100','Mecânico','Direção Hidráulica','/src/qualy/0243.pdf');
-INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('42069621000','Médico','Cardiologia','todas');
-INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('98765432200','Engenheiro','Producao','todas');
+INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('98765432100','Mecanica','Direção Hidráulica','/src/qualy/0243.pdf');
+INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('42069621000','Medicina','Cardiologia','todas');
+INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('98765432200','Engenharia','Producao','todas');
 INSERT INTO ADM (`CPF_Adm`) VALUES ('CPFEHSTRING');
 
 -- CLIENTE
@@ -208,3 +208,25 @@ select * from USUARIO;
 -- UPDATE USUARIO SET SEXO = 'F' WHERE CPF = '42069621000';
 
 -- UPDATE [TABELA] SET [CAMPO1] = [VALOR1], [CAMPO2] = [VALOR2] WHERE [CAMPO] = [VALOR];
+
+INSERT INTO USUARIO (`CPF`,`email`,`senha`,`nome`,`sexo`,`telefone`,`data_nascimento`) 
+VALUES ('121212122','prof3@admin.com','pro','Neymar Junior da Silva','M','5511987676545','2002-02-02');
+
+INSERT INTO USUARIO (`CPF`,`email`,`senha`,`nome`,`sexo`,`telefone`,`data_nascimento`) 
+VALUES ('131313133','prof4@admin.com','pro','Cassio Ferraz','M','5511987676545','2002-02-02');
+
+INSERT INTO USUARIO (`CPF`,`email`,`senha`,`nome`,`sexo`,`telefone`,`data_nascimento`) 
+VALUES ('141414144','prof5@admin.com','pro','Ronaldo Fenomeno','M','5511987676545','2002-02-02');
+
+INSERT INTO USUARIO (`CPF`,`email`,`senha`,`nome`,`sexo`,`telefone`,`data_nascimento`) 
+VALUES ('151515155','prof6@admin.com','pro','Marta','F','5511987676545','2002-02-02');
+
+INSERT INTO USUARIO (`CPF`,`email`,`senha`,`nome`,`sexo`,`telefone`,`data_nascimento`) 
+VALUES ('161616166','prof7@admin.com','pro','Camisimiro Reage','M','5511987676545','2002-02-02');
+
+-- PROFISSIONAIS
+INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('121212122','Mecanica','Direção Eletrica','0243.pdf');
+INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('131313133','Medicina','Cardiologia','todas');
+INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('141414144','Engenharia','Civil','todas');
+INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('151515155','Medicina','Cardiologia','todas');
+INSERT INTO PROFISSIONAL (`CPF_Profissional`,`area_atuacao`,`especialidade`,`qualificacoes`) VALUES ('161616166','Engenharia','Mecatronica','todas');

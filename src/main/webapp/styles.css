@@ -237,6 +237,17 @@ FORM
     0px 10px 20px -10px rgba(0, 0, 0, 0.1);
 }
 
+#form form {
+  width: 90%;
+  max-width: 980px;
+  background: white;
+
+  padding: 20px;
+
+  box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.15),
+    0px 10px 20px -10px rgba(0, 0, 0, 0.1);
+}
+
 #form h3 {
   margin-bottom: 30px;
 }
@@ -324,3 +335,50 @@ FORM
   margin: 50px auto;
   text-align: center;
 }
+
+/*=============== 
+FORM 2
+==================*/
+#form2 {
+  width: 100%;
+  padding: 20px 0;
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#form2 form {
+  width: 90%;
+  max-width: 980px;
+  background: white;
+
+  padding: 20px;
+
+  box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.15),
+    0px 10px 20px -10px rgba(0, 0, 0, 0.1);
+}
+
+#form h3 {
+  margin-bottom: 30px;
+}
+
+#form2 form label {
+  display: none;
+}
+
+#form2 .button {
+  background-color: var(--primary-color);
+  margin: -4px 8px 10px;
+}
+
+#filter_p {
+	color: rgb(154, 142, 191);
+	font-size: 1.8rem;
+	line-height: 3.2rem;
+	margin: 10px 0px 0px;
+}
+
+
+
