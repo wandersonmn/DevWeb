@@ -91,14 +91,14 @@ public class UsuarioDAO extends GenericDAO {
         return listaUsuarios;
     }
 
-    public void delete(USUARIO usuario) {
-        String sql = "DELETE FROM USUARIO where CPF = ?";
+    public void delete(String cpf) {
+        String sql = "DELETE FROM USUARIO where cpf = ?";
 
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setString(1, usuario.getCPF());
+            statement.setString(1, cpf);
             statement.executeUpdate();
 
             statement.close();

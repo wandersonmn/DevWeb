@@ -16,8 +16,8 @@
 	</caption>
 	<c:if test="${usuarios != null}">
 		<input type="hidden" name="id" value="${usuarios.getCPF()}" />
-		<input type="hidden" name="tipousuario" value="Clientes" />
 	</c:if>
+		<input type="hidden" name="tipousuario" value="Clientes" />
 	<tr>
 		<td><label for="nome">Nome</label></td>
 		<td><input type="text" id="nome" name="nome" size="45"

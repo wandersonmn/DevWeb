@@ -17,7 +17,7 @@
             <h1>Painel do Adm</h1>
             <h3>
                 <a href="/<%=contextPath%>/">Inicio</a>
-                <a href="/<%=contextPath%>/">	Novo Usuario</a>
+                <a href="/<%=contextPath%>/admin/cadastro?tipousuario=${param.tipousuario}">	Novo Usuario</a>
                 <a href="/<%=contextPath%>/login">	Logout</a>
             </h3>
         </div>
@@ -50,7 +50,7 @@
                         <td>${usuarios.getEmail()}</td>
                         <td><a href="/<%= contextPath%>/admin/edicao?cpf=${usuarios.getCPF()}&tipousuario=${param.tipousuario}">Editar</a>
 						&nbsp;&nbsp;&nbsp;&nbsp; <a
-						href="/<%= contextPath%>/admin/remocao?cpf=${usuarios.getCPF()}}"
+						href="/<%= contextPath%>/admin/remocao?cpf=${usuarios.getCPF()}"
 						onclick="return confirm('Tem certeza de que deseja excluir este usuário?');">
 							Remover </a></td>
                     </tr>

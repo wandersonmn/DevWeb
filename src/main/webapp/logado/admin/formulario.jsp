@@ -33,16 +33,18 @@
 				
 			</c:when>
 			<c:otherwise>
-				<c:when  test="${param.tipousuario =='Profissionais'}">
-						<form action="insercao" method="post">
-							<%@include file="camposPro.jsp"%>
-						</form>
-					</c:when>
-					<c:otherwise>
-						<form action="insercao" method="post">
-							<%@include file="camposCli.jsp"%>
-						</form>
-					</c:otherwise>
+				<c:choose>
+					<c:when  test="${param.tipousuario =='Profissionais'}">
+							<form action="insercao" method="post">
+								<%@include file="camposPro.jsp"%>
+							</form>
+						</c:when>
+						<c:otherwise>
+							<form action="insercao" method="post">
+								<%@include file="camposCli.jsp"%>
+							</form>
+						</c:otherwise>
+				</c:choose>
 			</c:otherwise>
 		</c:choose>
 	</div>

@@ -23,6 +23,7 @@ public class AdminController extends HttpServlet {
 
     private ClienteDAO cldao;
     private ProfissionalDAO prdao;
+    private UsuarioDAO usrdao;
     private List<String> users;
     
     
@@ -31,6 +32,7 @@ public class AdminController extends HttpServlet {
     public void init() {
         cldao = new ClienteDAO();
         prdao = new ProfissionalDAO();
+        usrdao = new UsuarioDAO();
         users = new ArrayList<String>();
         users.add("Clientes");
         users.add("Profissionais");
@@ -67,6 +69,15 @@ public class AdminController extends HttpServlet {
                     case "/atualizacao":
                     	atualize(request, response);
                     	break;
+                    case "/cadastro":
+                    	apresentaFormCadastro(request, response);
+                    	break;
+                    case "/insercao":
+                        insere(request, response);
+                        break;
+                    case "/remocao":
+                    	remove(request, response);
+                        break;
                     default:
                         lista(request, response);
                 }
@@ -104,14 +115,13 @@ public class AdminController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/conta.jsp");
         dispatcher.forward(request, response);
     }
-    /*
+    
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("editoras", getEditoras());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/livro/formulario.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/formulario.jsp");
         dispatcher.forward(request, response);
     }
-	*/
+	
     private void apresentaFormEdicao(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String cpf = request.getParameter("cpf");
@@ -137,24 +147,37 @@ public class AdminController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/formulario.jsp");
         dispatcher.forward(request, response);
     }
-    /*
+    
     private void insere(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         
-        String titulo = request.getParameter("titulo");
-        String autor = request.getParameter("autor");
-        Integer ano = Integer.parseInt(request.getParameter("ano"));
-        Float preco = Float.parseFloat(request.getParameter("preco"));
+        String cpf = request.getParameter("cpf");
+        String nome = request.getParameter("nome");
+        String email = request.getParameter("email");
+        String sexo = request.getParameter("sexo");
+        String telefone = request.getParameter("telefone");
+        String data_nascimento = request.getParameter("data_nascimento");
+        String senha = request.getParameter("senha");
         
-        Long editoraID = Long.parseLong(request.getParameter("editora"));
-        Editora editora = new EditoraDAO().get(editoraID);
+        //profissional
+        String area_atuacao = request.getParameter("area_atuacao");
+        String especialidade = request.getParameter("especialidade");
+        String qualificacoes = request.getParameter("qualificacoes");
         
-        Livro livro = new Livro(titulo, autor, ano, preco, editora);
-        dao.insert(livro);
+        USUARIO user = new USUARIO(cpf, email, senha,  nome,  sexo, 
+   			 telefone,  data_nascimento);
+
+       if(request.getParameter("tipousuario").equals("Profissionais")) {
+       	PROFISSIONAL pro = new PROFISSIONAL(user, area_atuacao,especialidade,qualificacoes);
+       	prdao.insert(pro);
+       }else {
+       	CLIENTE cli = new CLIENTE(user);
+       	cldao.insert(cli);
+       }
         response.sendRedirect("lista");
     }
-	*/
+	
     private void atualize(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	System.out.println("LOG -- atualize()");
@@ -174,10 +197,7 @@ public class AdminController extends HttpServlet {
         
         USUARIO user = new USUARIO(cpf, email, senha,  nome,  sexo, 
     			 telefone,  data_nascimento);
-        
-        System.out.printf("%s %s %s %s %s %s %s", cpf, email, senha,  nome,  sexo, 
-   			 telefone,  data_nascimento);
-        System.out.println(request.getParameter("tipousuario"));
+
         if(request.getParameter("tipousuario").equals("Profissionais")) {
         	PROFISSIONAL pro = new PROFISSIONAL(user, area_atuacao,especialidade,qualificacoes);
         	prdao.update(pro);
@@ -187,14 +207,13 @@ public class AdminController extends HttpServlet {
         }
         response.sendRedirect("lista");
     }
-    /*
+    
     private void remove(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-        Long id = Long.parseLong(request.getParameter("id"));
+        String cpf = request.getParameter("cpf");
 
-        Livro livro = new Livro(id);
-        dao.delete(livro);
+        usrdao.delete(cpf);
         response.sendRedirect("lista");
     }
-    */
+    
 }
